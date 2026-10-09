@@ -1,0 +1,6 @@
+{
+  "name": "Shubho Bibaho - Royal Wedding Invitation & RSVP",
+  "description": "An elegant interactive wedding invitation card featuring animated envelope opening, ceremony timeline, photo gallery, RSVP tracking, and Google Sheets guestbook integration.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
