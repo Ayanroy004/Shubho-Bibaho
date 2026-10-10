@@ -2,8 +2,8 @@ import { WeddingSettings, CeremonyItem, StoryMilestone, WeddingPhoto, RSVPSubmis
 
 export const initialWeddingSettings: WeddingSettings = {
   groom: {
-    nameBn: 'অয়ন রায়',
-    nameEn: 'Ayan Roy',
+    nameBn: 'অর্ঘ্য দে',
+    nameEn: 'Argha De',
     subTitleBn: 'বি.টেক (কম্পিউটার সায়েন্স), সফটওয়্যার আর্কিটেক্ট',
     subTitleEn: 'B.Tech (CSE), Software Architect',
     fatherBn: 'শ্রী সুভাষচন্দ্র রায়',
@@ -19,8 +19,8 @@ export const initialWeddingSettings: WeddingSettings = {
     photoUrl: 'https://images.unsplash.com/photo-1583939003579-730e3918a45a?auto=format&fit=crop&w=700&q=80',
   },
   bride: {
-    nameBn: 'শ্রেয়া মুখার্জী',
-    nameEn: 'Shreya Mukherjee',
+    nameBn: 'অর্পিতা বসু',
+    nameEn: 'Arpita Basu',
     subTitleBn: 'এম.এ. (ইংরেজি সাহিত্য), সহকারি অধ্যাপিকা',
     subTitleEn: 'M.A. (English Literature), Assistant Professor',
     fatherBn: 'শ্রী রথীন্দ্রনাথ মুখার্জী',
@@ -36,13 +36,13 @@ export const initialWeddingSettings: WeddingSettings = {
     photoUrl: 'https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&w=700&q=80',
   },
   weddingDate: '2026-12-11T20:25:00',
-  weddingDateBn: '২৫শে অগ্রহায়ণ, ১৪৩১ বঙ্গাব্দ (১১ই ডিসেম্বর, ২০২৬)',
-  weddingDateEn: 'Friday, 11th December, 2026 (25th Agrahayana, 1431)',
-  venueNameBn: 'রায় বাড়ি (Roy Bari Banquets & Heritage Villa)',
-  venueNameEn: 'Roy Bari Banquets & Heritage Villa',
-  venueAddressBn: '১৮/বি, জি.টি. রোড, উত্তরপাড়া, হুগলি - ৭১২২৫৮ (উত্তরপাড়া স্টেশনের নিকট)',
-  venueAddressEn: '18/B, G.T. Road, Uttarpara, Hooghly - 712258 (Near Uttarpara Railway Station)',
-  venueMapsUrl: 'https://maps.google.com/?q=Uttarpara,Hooghly,West+Bengal',
+  weddingDateBn: '২৬শে অগ্রহায়ণ, ১৪৩৩ বঙ্গাব্দ (১৩ই ডিসেম্বর, ২০২৬)',
+  weddingDateEn: 'Friday, 13th December, 2026 (26th Agrahayana, 1433)',
+  venueNameBn: 'বসু বাড়ি (Basu Bari)',
+  venueNameEn: 'Basu Bari',
+  venueAddressBn: 'মাতিশ্বর বসুপাড়া পূর্ব বর্ধমান',
+  venueAddressEn: 'Matishwar Basupara East Burdwan',
+  venueMapsUrl: 'https://maps.app.goo.gl/pNfPZdbKAZdeDfx66',
   googleSheetsWebhookUrl: '',
   contactPhones: [
     { labelBn: 'বরের পরিবার (শ্রী সুভাষ রায়)', labelEn: "Groom's Family (Sri Subhash Roy)", number: '+91 98301 23456' },
