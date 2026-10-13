@@ -1,6 +1,15 @@
-import React from 'react';
-import { BookOpen, Sparkles, Camera, MapPin, MailCheck, Scroll, ChevronRight } from 'lucide-react';
-import { Language } from '../types';
+import React from "react";
+import {
+  BookOpen,
+  Sparkles,
+  Camera,
+  MapPin,
+  MailCheck,
+  Scroll,
+  ChevronRight,
+  Code2,
+} from "lucide-react";
+import { Language } from "../types";
 
 interface Page3Props {
   language: Language;
@@ -11,75 +20,86 @@ export const Page3ChapterIndex: React.FC<Page3Props> = ({
   language,
   onNavigatePage,
 }) => {
-  const isBn = language === 'bn';
+  const isBn = language === "bn";
 
   // The chapter cards styled strictly in RED, WHITE, and YELLOW
   const chapterCards = [
     {
       page: 4,
-      titleBn: 'আমাদের গল্প ও পরিবার পর্ব',
-      titleEn: 'Our Story & Family Journey',
-      subtitleBn: 'আমাদের পথচলা ও দুই পরিবারের পরিচয়',
-      subtitleEn: 'Our journey of love and lineage of both families',
-      bgClass: 'bg-gradient-to-r from-red-900 via-red-800 to-red-950',
-      borderClass: 'border-yellow-400 hover:border-yellow-300',
+      titleBn: "আমাদের গল্প ও পরিবার পর্ব",
+      titleEn: "Our Story & Family Journey",
+      subtitleBn: "আমাদের পথচলা ও দুই পরিবারের পরিচয়",
+      subtitleEn: "Our journey of love and lineage of both families",
+      bgClass: "bg-gradient-to-r from-red-900 via-red-800 to-red-950",
+      borderClass: "border-yellow-400 hover:border-yellow-300",
       icon: BookOpen,
-      circleBg: 'bg-red-950 text-yellow-400 border border-yellow-400',
+      circleBg: "bg-red-950 text-yellow-400 border border-yellow-400",
     },
     {
       page: 5,
-      titleBn: 'স্মারক লিপি (অনুষ্ঠান সূচী)',
-      titleEn: 'Ceremony Itinerary & Timeline',
-      subtitleBn: 'আইবুড়ো ভাত, গায়ে হলুদ ও শুভ পরিণয়',
-      subtitleEn: 'Aiburobhat, Gaye Holud & Sacred Wedding Vows',
-      bgClass: 'bg-gradient-to-r from-red-800 via-red-700 to-red-900',
-      borderClass: 'border-yellow-400 hover:border-yellow-300',
+      titleBn: "স্মারক লিপি (অনুষ্ঠান সূচী)",
+      titleEn: "Ceremony Itinerary & Timeline",
+      subtitleBn: "আইবুড়ো ভাত, গায়ে হলুদ ও শুভ পরিণয়",
+      subtitleEn: "Aiburobhat, Gaye Holud & Sacred Wedding Vows",
+      bgClass: "bg-gradient-to-r from-red-800 via-red-700 to-red-900",
+      borderClass: "border-yellow-400 hover:border-yellow-300",
       icon: Sparkles,
-      circleBg: 'bg-red-950 text-yellow-400 border border-yellow-400',
+      circleBg: "bg-red-950 text-yellow-400 border border-yellow-400",
     },
+    // {
+    //   page: 6,
+    //   titleBn: 'আমাদের কিছু মুহূর্ত (ফটো গ্যালারি)',
+    //   titleEn: 'Cherished Moments & Gallery',
+    //   subtitleBn: 'ভালোবাসা, আনন্দ ও উৎসবের অ্যালবাম',
+    //   subtitleEn: 'Album of love, laughter, and celebrations',
+    //   bgClass: 'bg-gradient-to-r from-red-900 via-red-800 to-red-950',
+    //   borderClass: 'border-yellow-400 hover:border-yellow-300',
+    //   icon: Camera,
+    //   circleBg: 'bg-red-950 text-yellow-400 border border-yellow-400',
+    // },
     {
       page: 6,
-      titleBn: 'আমাদের কিছু মুহূর্ত (ফটো গ্যালারি)',
-      titleEn: 'Cherished Moments & Gallery',
-      subtitleBn: 'ভালোবাসা, আনন্দ ও উৎসবের অ্যালবাম',
-      subtitleEn: 'Album of love, laughter, and celebrations',
-      bgClass: 'bg-gradient-to-r from-red-900 via-red-800 to-red-950',
-      borderClass: 'border-yellow-400 hover:border-yellow-300',
-      icon: Camera,
-      circleBg: 'bg-red-950 text-yellow-400 border border-yellow-400',
+      titleBn: "বিবাহ বাসর ও অবস্থান",
+      titleEn: "Wedding Venue & Live Map",
+      subtitleBn: "‘রায় বাড়ি’ ও সরাসরি লাইভ রুট ম্যাপ",
+      subtitleEn: "'Roy Bari' and direct interactive route directions",
+      bgClass: "bg-gradient-to-r from-red-800 via-red-700 to-red-900",
+      borderClass: "border-yellow-400 hover:border-yellow-300",
+      icon: MapPin,
+      circleBg: "bg-red-950 text-yellow-400 border border-yellow-400",
     },
     {
       page: 7,
-      titleBn: 'বিবাহ বাসর ও অবস্থান',
-      titleEn: 'Wedding Venue & Live Map',
-      subtitleBn: '‘রায় বাড়ি’ ও সরাসরি লাইভ রুট ম্যাপ',
-      subtitleEn: "'Roy Bari' and direct interactive route directions",
-      bgClass: 'bg-gradient-to-r from-red-800 via-red-700 to-red-900',
-      borderClass: 'border-yellow-400 hover:border-yellow-300',
-      icon: MapPin,
-      circleBg: 'bg-red-950 text-yellow-400 border border-yellow-400',
+      titleBn: "উপস্থিতি নিশ্চিত করুন (RSVP)",
+      titleEn: "Confirm Attendance (RSVP)",
+      subtitleBn: "আপনার উপস্থিতি ও আশীর্বাদ আমাদের কাম্য",
+      subtitleEn: "Your gracious presence and blessings mean the world to us",
+      bgClass: "bg-gradient-to-r from-red-900 via-red-800 to-red-950",
+      borderClass: "border-yellow-400 hover:border-yellow-300",
+      icon: MailCheck,
+      circleBg: "bg-red-950 text-yellow-400 border border-yellow-400",
     },
     {
       page: 8,
-      titleBn: 'উপস্থিতি নিশ্চিত করুন (RSVP)',
-      titleEn: 'Confirm Attendance (RSVP)',
-      subtitleBn: 'আপনার উপস্থিতি ও আশীর্বাদ আমাদের কাম্য',
-      subtitleEn: 'Your gracious presence and blessings mean the world to us',
-      bgClass: 'bg-gradient-to-r from-red-900 via-red-800 to-red-950',
-      borderClass: 'border-yellow-400 hover:border-yellow-300',
-      icon: MailCheck,
-      circleBg: 'bg-red-950 text-yellow-400 border border-yellow-400',
+      titleBn: "ঐতিহ্যবাহী নিমন্ত্রণ লিপি",
+      titleEn: "Traditional Invitation Letter",
+      subtitleBn: "সবিনয় নিবেদন ও আশীর্বাদের সনাতনী চিঠি",
+      subtitleEn: "Humble Vedic invitation letter & ancestral blessings",
+      bgClass: "bg-gradient-to-r from-red-800 via-red-700 to-red-900",
+      borderClass: "border-yellow-400 hover:border-yellow-300",
+      icon: Scroll,
+      circleBg: "bg-red-950 text-yellow-400 border border-yellow-400",
     },
     {
       page: 9,
-      titleBn: 'ঐতিহ্যবাহী নিমন্ত্রণ লিপি',
-      titleEn: 'Traditional Invitation Letter',
-      subtitleBn: 'সবিনয় নিবেদন ও আশীর্বাদের সনাতনী চিঠি',
-      subtitleEn: 'Humble Vedic invitation letter & ancestral blessings',
-      bgClass: 'bg-gradient-to-r from-red-800 via-red-700 to-red-900',
-      borderClass: 'border-yellow-400 hover:border-yellow-300',
-      icon: Scroll,
-      circleBg: 'bg-red-950 text-yellow-400 border border-yellow-400',
+      titleBn: "সৌজন্যে ও প্রযুক্তিগত সহযোগিতায়",
+      titleEn: "Powered By & Credits",
+      subtitleBn: "বিশেষ কৃতজ্ঞতা প্রকাশ ও কারিগরি সহযোগিতায়",
+      subtitleEn: "Special gratitude, family wishes & developer credits",
+      bgClass: "bg-gradient-to-r from-red-800 via-red-700 to-red-900",
+      borderClass: "border-yellow-400 hover:border-yellow-300",
+      icon: Code2,
+      circleBg: "bg-red-950 text-yellow-400 border border-yellow-400",
     },
   ];
 
@@ -93,25 +113,27 @@ export const Page3ChapterIndex: React.FC<Page3Props> = ({
         {/* Header from reference image */}
         <div className="text-center mb-4 sm:mb-5 relative z-10">
           <h2 className="text-xl sm:text-2xl font-bold font-serif text-red-900 tracking-wide">
-            {isBn ? '॥ আমন্ত্রণের অন্যান্য অধ্যায় ॥' : '॥ Other Chapters of Invitation ॥'}
+            {isBn
+              ? "॥ আমন্ত্রণের অন্যান্য অধ্যায় ॥"
+              : "॥ Other Chapters of Invitation ॥"}
           </h2>
           <p className="text-xs sm:text-sm font-serif text-red-800 mt-1">
             {isBn
-              ? 'প্রতিটি পাতা আলাদাভাবে দেখতে নিচের কার্ডে ট্যাপ করুন'
-              : 'Tap any card below to navigate directly to that section'}
+              ? "প্রতিটি পাতা আলাদাভাবে দেখতে নিচের কার্ডে ট্যাপ করুন"
+              : "Tap any card below to navigate directly to that section"}
           </p>
         </div>
 
         {/* 6 Action Cards */}
         <div className="space-y-2.5 sm:space-y-3 relative z-10">
-          {chapterCards.map(card => {
+          {chapterCards.map((card) => {
             const Icon = card.icon;
             return (
               <button
                 key={card.page}
                 onClick={() => {
                   onNavigatePage(card.page);
-                  window.scrollTo({ top: 0, behavior: 'smooth' });
+                  window.scrollTo({ top: 0, behavior: "smooth" });
                 }}
                 className={`w-full text-left rounded-xl sm:rounded-2xl p-2.5 sm:p-4 ${card.bgClass} border-2 ${card.borderClass} shadow hover:shadow-md transition-all transform hover:-translate-y-0.5 active:scale-[0.99] flex items-center justify-between group cursor-pointer`}
               >
@@ -147,8 +169,8 @@ export const Page3ChapterIndex: React.FC<Page3Props> = ({
         <div className="mt-6 sm:mt-8 text-center pt-1 relative z-10">
           <p className="text-xs sm:text-sm font-serif italic text-red-900 tracking-wide max-w-md mx-auto px-1">
             {isBn
-              ? '“তোমাদের উপস্থিতিই আমাদের এই আনন্দের আসল সৌন্দর্য...”'
-              : '“Your gracious presence is the true beauty of our joyful celebration...”'}
+              ? "“তোমাদের উপস্থিতিই আমাদের এই আনন্দের আসল সৌন্দর্য...”"
+              : "“Your gracious presence is the true beauty of our joyful celebration...”"}
           </p>
         </div>
       </div>

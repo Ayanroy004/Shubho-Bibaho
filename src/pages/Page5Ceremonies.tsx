@@ -1,8 +1,19 @@
-import React from 'react';
-import { Calendar, Clock, MapPin, Shirt, CalendarPlus, ArrowRight } from 'lucide-react';
-import { Language, CeremonyItem } from '../types';
-import { ceremoniesData } from '../weddingData';
-import { KolkaOrnament, MandapDivider, RoyalFrame } from '../components/Ornaments';
+import React from "react";
+import {
+  Calendar,
+  Clock,
+  MapPin,
+  Shirt,
+  CalendarPlus,
+  ArrowRight,
+} from "lucide-react";
+import { Language, CeremonyItem } from "../types";
+import { ceremoniesData } from "../weddingData";
+import {
+  KolkaOrnament,
+  MandapDivider,
+  RoyalFrame,
+} from "../components/Ornaments";
 
 interface Page5Props {
   language: Language;
@@ -15,119 +26,152 @@ export const Page5Ceremonies: React.FC<Page5Props> = ({
   onNextPage,
   onGoToIndex,
 }) => {
-  const isBn = language === 'bn';
+  const isBn = language === "bn";
 
   const makeGoogleCalendarUrl = (item: CeremonyItem) => {
-    const title = encodeURIComponent(`Ayan & Shreya Wedding: ${item.titleEn}`);
-    const details = encodeURIComponent(
-      `Join us for ${item.titleEn} (${item.titleBn})\nTime: ${item.timeEn}\nVenue: ${item.hallEn}\nDress Code: ${item.dressEn}`
-    );
-    const location = encodeURIComponent(`${item.hallEn}, Uttarpara, Hooghly, West Bengal`);
-    let startIso = '20261211T143000Z';
-    let endIso = '20261211T183000Z';
+    const title = encodeURIComponent(`Argha & Arpita Wedding: ${item.titleEn}`);
 
-    if (item.id === 'aiburobhat') {
-      startIso = '20261209T070000Z';
-      endIso = '20261209T103000Z';
-    } else if (item.id === 'gaye_holud') {
-      startIso = '20261211T033000Z';
-      endIso = '20261211T070000Z';
-    } else if (item.id === 'bibaho') {
-      startIso = '20261211T130000Z';
-      endIso = '20261211T190000Z';
-    } else if (item.id === 'boubhat') {
-      startIso = '20261213T133000Z';
-      endIso = '20261213T183000Z';
+    const details = encodeURIComponent(
+      `Join us for ${item.titleEn} (${item.titleBn})\nTime: ${item.timeEn}\nVenue: ${item.hallEn}`,
+    );
+
+    const location = encodeURIComponent(
+      `${item.hallEn}, Amadpur, Memari, Purba Bardhaman`,
+    );
+
+    let startIso = "";
+    let endIso = "";
+
+    if (item.id === "aiburobhat") {
+      startIso = "20261212T193000Z";
+      endIso = "20261212T223000Z";
+    } else if (item.id === "gaye_holud") {
+      startIso = "20261213T090000Z";
+      endIso = "20261213T110000Z";
+    } else if (item.id === "bibaho") {
+      startIso = "20261213T180000Z";
+      endIso = "20261214T013000Z";
+    } else if (item.id === "boubhat") {
+      startIso = "20261214T140000Z";
+      endIso = "20261214T153000Z";
+    } else if (item.id === "reception") {
+      startIso = "20261215T180000Z";
+      endIso = "20261216T010000Z";
     }
 
     return `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${title}&dates=${startIso}/${endIso}&details=${details}&location=${location}`;
   };
 
   return (
-    <div className="w-full max-w-xl mx-auto px-2.5 sm:px-4 py-4 pb-28 text-red-950">
-      <RoyalFrame className="bg-white border-2 border-yellow-400">
+    <div className="mx-auto w-full min-w-0 max-w-xl overflow-x-clip px-2 py-4 pb-28 text-red-950 sm:px-4">
+      <RoyalFrame className="min-w-0 border-2 border-yellow-400 bg-white">
         {/* Header */}
-        <div className="text-center mb-4 sm:mb-6">
-          <div className="flex justify-center items-center gap-2 mb-1 sm:mb-2">
-            <KolkaOrnament className="w-5 sm:w-6 h-5 sm:h-6 text-yellow-500" />
-            <span className="text-[10px] sm:text-xs font-serif font-bold text-red-800 tracking-widest uppercase">
-              {isBn ? '॥ অধ্যায় ২: মাঙ্গলিক অনুষ্ঠান ॥' : '॥ Chapter 2: Auspicious Ceremonies ॥'}
+        <div className="mb-4 min-w-0 text-center sm:mb-6">
+          <div className="mb-1 flex min-w-0 items-center justify-center gap-1 sm:mb-2 sm:gap-2">
+            <KolkaOrnament className="h-5 w-5 shrink-0 text-yellow-500 sm:h-6 sm:w-6" />
+
+            <span className="min-w-0 break-words text-[9px] font-serif font-bold uppercase leading-relaxed tracking-wide text-red-800 min-[375px]:text-[10px] min-[420px]:tracking-widest sm:text-xs">
+              {isBn
+                ? "॥ অধ্যায় ২: মাঙ্গলিক অনুষ্ঠান ॥"
+                : "॥ Chapter 2: Auspicious Ceremonies ॥"}
             </span>
-            <KolkaOrnament className="w-5 sm:w-6 h-5 sm:h-6 text-yellow-500 -scale-x-100" />
+
+            <KolkaOrnament className="h-5 w-5 shrink-0 -scale-x-100 text-yellow-500 sm:h-6 sm:w-6" />
           </div>
 
-          <h2 className="text-2xl sm:text-4xl font-bold font-serif text-red-900">
-            {isBn ? 'স্মারক লিপি (অনুষ্ঠান সূচী)' : 'Wedding Itinerary & Timeline'}
-          </h2>
-          <p className="text-xs sm:text-sm font-serif text-stone-600 mt-1 max-w-md mx-auto px-1">
+          <h2 className="break-words font-serif text-2xl font-bold leading-tight text-red-900 min-[375px]:text-3xl sm:text-4xl">
             {isBn
-              ? 'আইবুড়ো ভাত, গায়ে হলুদ, শুভ পরিণয় ও প্রীতিভোজের নির্ঘণ্ট'
-              : 'Detailed schedule of sacred rituals, timings, venues & festive feasts'}
+              ? "স্মারক লিপি (অনুষ্ঠান সূচী)"
+              : "Wedding Itinerary & Timeline"}
+          </h2>
+
+          <p className="mx-auto mt-1 max-w-md break-words px-1 text-xs font-serif leading-relaxed text-stone-600 sm:text-sm">
+            {isBn
+              ? "আইবুড়ো ভাত, গায়ে হলুদ, শুভ পরিণয় ও প্রীতিভোজের নির্ঘণ্ট"
+              : "Detailed schedule of sacred rituals, timings, venues & festive feasts"}
           </p>
         </div>
 
         {/* Ceremonies Cards List */}
-        <div className="space-y-3.5 my-3 sm:my-4">
+        <div className="my-3 min-w-0 space-y-3.5 sm:my-4">
           {ceremoniesData.map((item, index) => (
             <div
               key={item.id}
-              className="rounded-2xl p-3.5 sm:p-5 bg-red-50 border-2 border-yellow-400 shadow-sm relative overflow-hidden"
+              className="relative min-w-0 overflow-hidden rounded-2xl border-2 border-yellow-400 bg-red-50 p-3.5 shadow-sm"
             >
               {/* Top Accent & Step Number */}
-              <div className="flex items-center justify-between pb-2 border-b border-yellow-400/40 mb-2.5">
-                <span className="px-2.5 py-0.5 rounded-full bg-red-800 text-yellow-300 text-[10px] sm:text-xs font-serif font-bold shadow-sm">
+              <div className="mb-2.5 flex min-w-0 flex-wrap items-center justify-between gap-x-2 gap-y-1 border-b border-yellow-400/40 pb-2">
+                <span className="shrink-0 rounded-full bg-red-800 px-2.5 py-1 text-[10px] font-serif font-bold text-yellow-300 shadow-sm sm:text-xs">
                   {isBn ? `পর্ব ${index + 1}` : `Ritual ${index + 1}`}
                 </span>
-                <span className="text-[11px] sm:text-xs font-serif font-bold text-red-800">
+
+                <span className="min-w-0 break-words text-right text-[10px] font-serif font-bold leading-relaxed text-red-800 sm:text-xs">
                   {isBn ? item.dateBn : item.dateEn}
                 </span>
               </div>
 
               {/* Title & Subtitle */}
-              <h3 className="text-base sm:text-lg font-bold font-serif text-red-950">
+              <h3 className="break-words font-serif text-base font-bold leading-snug text-red-950 sm:text-lg">
                 {isBn ? item.titleBn : item.titleEn}
               </h3>
-              <p className="text-[11px] sm:text-xs font-serif text-stone-600 italic mt-0.5">
+
+              <p className="mt-0.5 break-words text-[11px] font-serif italic leading-relaxed text-stone-600 sm:text-xs">
                 {isBn ? item.subtitleBn : item.subtitleEn}
               </p>
 
               {/* Timing, Hall & Dress Code Details */}
-              <div className="mt-3 pt-2.5 border-t border-yellow-300/60 space-y-1.5 text-[11px] sm:text-xs font-serif text-stone-800 bg-white p-2.5 sm:p-3 rounded-xl border border-yellow-300">
-                <div className="flex items-center gap-2">
-                  <Clock className="w-3.5 h-3.5 text-red-700 shrink-0" />
-                  <div>
-                    <span className="font-bold text-red-900">{isBn ? 'শুভ সময়:' : 'Time:'}</span>{' '}
+              <div className="mt-3 min-w-0 space-y-2 rounded-xl border border-yellow-300 bg-white p-2.5 font-serif text-[11px] text-stone-800 sm:p-3 sm:text-xs">
+                <div className="flex min-w-0 items-start gap-2">
+                  <Clock className="mt-0.5 h-3.5 w-3.5 shrink-0 text-red-700" />
+
+                  <div className="min-w-0 break-words leading-relaxed">
+                    <span className="font-bold text-red-900">
+                      {isBn ? "শুভ সময়:" : "Time:"}
+                    </span>{" "}
                     <span>{isBn ? item.timeBn : item.timeEn}</span>
                   </div>
                 </div>
 
-                <div className="flex items-center gap-2">
-                  <MapPin className="w-3.5 h-3.5 text-red-700 shrink-0" />
-                  <div>
-                    <span className="font-bold text-red-900">{isBn ? 'স্থান:' : 'Hall/Venue:'}</span>{' '}
+                <div className="flex min-w-0 items-start gap-2">
+                  <MapPin className="mt-0.5 h-3.5 w-3.5 shrink-0 text-red-700" />
+
+                  <div className="min-w-0 break-words leading-relaxed">
+                    <span className="font-bold text-red-900">
+                      {isBn ? "স্থান:" : "Hall/Venue:"}
+                    </span>{" "}
                     <span>{isBn ? item.hallBn : item.hallEn}</span>
                   </div>
                 </div>
 
-                <div className="flex items-center gap-2">
-                  <Shirt className="w-3.5 h-3.5 text-red-700 shrink-0" />
-                  <div>
-                    <span className="font-bold text-red-900">{isBn ? 'পোশাকের ভাবনা:' : 'Dress Code:'}</span>{' '}
+                {/* Dress code section remains available if needed */}
+                {/*
+                <div className="flex min-w-0 items-start gap-2">
+                  <Shirt className="mt-0.5 h-3.5 w-3.5 shrink-0 text-red-700" />
+                  <div className="min-w-0 break-words leading-relaxed">
+                    <span className="font-bold text-red-900">
+                      {isBn ? "পোশাকের ভাবনা:" : "Dress Code:"}
+                    </span>{" "}
                     <span>{isBn ? item.dressBn : item.dressEn}</span>
                   </div>
                 </div>
+                */}
               </div>
 
               {/* Add to Google Calendar Action Button */}
-              <div className="mt-3 flex justify-end">
+              <div className="mt-3 flex min-w-0 justify-end">
                 <a
                   href={makeGoogleCalendarUrl(item)}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-yellow-400 hover:bg-yellow-300 text-red-950 border border-yellow-200 text-xs font-serif font-bold shadow-sm transition-all active:scale-95"
+                  className="inline-flex min-w-0 max-w-full items-center justify-center gap-1.5 rounded-full border border-yellow-200 bg-yellow-400 px-2.5 py-2 text-center text-[10px] font-serif font-bold leading-tight text-red-950 shadow-sm transition-all hover:bg-yellow-300 active:scale-95 min-[375px]:px-3 min-[375px]:text-xs"
                 >
-                  <CalendarPlus className="w-3.5 h-3.5 text-red-950" />
-                  <span>{isBn ? 'গুগল ক্যালেন্ডারে যোগ করুন' : 'Add to Google Calendar'}</span>
+                  <CalendarPlus className="h-3.5 w-3.5 shrink-0 text-red-950" />
+
+                  <span className="min-w-0 break-words">
+                    {isBn
+                      ? "গুগল ক্যালেন্ডারে যোগ করুন"
+                      : "Add to Google Calendar"}
+                  </span>
                 </a>
               </div>
             </div>
@@ -137,20 +181,27 @@ export const Page5Ceremonies: React.FC<Page5Props> = ({
         <MandapDivider className="my-4" />
 
         {/* Navigation Footers */}
-        <div className="flex flex-col sm:flex-row items-center justify-between gap-2.5 mt-4">
+        <div className="mt-4 flex min-w-0 flex-col items-stretch justify-between gap-2.5 sm:flex-row sm:items-center">
           <button
+            type="button"
             onClick={onGoToIndex}
-            className="w-full sm:w-auto px-4 py-2.5 rounded-full bg-red-50 hover:bg-red-100 text-red-900 text-xs sm:text-sm font-serif font-bold border border-yellow-400"
+            className="w-full min-w-0 break-words rounded-full border border-yellow-400 bg-red-50 px-4 py-2.5 text-center text-xs font-serif font-bold leading-relaxed text-red-900 transition-colors hover:bg-red-100 sm:w-auto sm:text-sm"
           >
-            {isBn ? '‹ সূচিপত্রে ফিরুন' : '‹ Back to Chapters'}
+            {isBn ? "‹ সূচিপত্রে ফিরুন" : "‹ Back to Chapters"}
           </button>
 
           <button
+            type="button"
             onClick={onNextPage}
-            className="w-full sm:w-auto px-5 py-2.5 rounded-full bg-red-800 hover:bg-red-700 text-yellow-300 text-xs sm:text-sm font-serif font-bold border-2 border-yellow-400 shadow flex items-center justify-center gap-1.5 group"
+            className="group flex w-full min-w-0 items-center justify-center gap-1.5 rounded-full border-2 border-yellow-400 bg-red-800 px-4 py-2.5 text-center text-xs font-serif font-bold leading-relaxed text-yellow-300 shadow transition-all hover:bg-red-700 active:scale-95 sm:w-auto sm:px-5 sm:text-sm"
           >
-            <span>{isBn ? 'পরবর্তী: অ্যালবাম ও স্মৃতিমালা' : 'Next: Photo Gallery'}</span>
-            <ArrowRight className="w-3.5 h-3.5 text-yellow-400 group-hover:translate-x-1 transition-transform" />
+            <span className="min-w-0 break-words">
+              {isBn
+                ? "পরবর্তী: বিবাহ বাসর ও অবস্থান"
+                : "Next: Venue & Location"}
+            </span>
+
+            <ArrowRight className="h-3.5 w-3.5 shrink-0 text-yellow-400 transition-transform group-hover:translate-x-1" />
           </button>
         </div>
       </RoyalFrame>

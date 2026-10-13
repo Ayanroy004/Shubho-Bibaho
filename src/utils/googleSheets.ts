@@ -1,4 +1,4 @@
-import { RSVPSubmission } from '../types';
+import { RSVPSubmission } from "../types";
 
 export const GOOGLE_APPS_SCRIPT_SAMPLE = `// --------------------------------------------------------------------------
 // GOOGLE SHEETS WEDDING RSVP CONNECTOR
@@ -50,13 +50,14 @@ function doPost(e) {
  */
 export async function sendRSVPToGoogleSheet(
   webhookUrl: string,
-  rsvp: RSVPSubmission
+  rsvp: RSVPSubmission,
 ): Promise<{ success: boolean; message: string }> {
   if (!webhookUrl || !webhookUrl.trim()) {
     // Stored locally, notify host that it's ready for Google Sheet sync
     return {
       success: true,
-      message: 'লোকাল ডাটাবেসে সংরক্ষিত হয়েছে (Google Sheet URL কনফিগার থাকলে সরাসরি শিটেও যাবে)',
+      message:
+        "লোকাল ডাটাবেসে সংরক্ষিত হয়েছে (Google Sheet URL কনফিগার থাকলে সরাসরি শিটেও যাবে)",
     };
   }
 
@@ -73,24 +74,25 @@ export async function sendRSVPToGoogleSheet(
     };
 
     // Google Apps Script requires no-cors or standard POST
+
     await fetch(webhookUrl.trim(), {
-      method: 'POST',
-      mode: 'no-cors',
+      method: "POST",
+      mode: "cors",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "text/plain;charset=UTF-8",
       },
       body: JSON.stringify(payload),
     });
 
     return {
       success: true,
-      message: 'গুগল শিটে আপনার উপস্থিতি ও বার্তা সফলভাবে রেকর্ড করা হয়েছে!',
+      message: "গুগল শিটে আপনার উপস্থিতি ও বার্তা সফলভাবে রেকর্ড করা হয়েছে!",
     };
   } catch (error) {
-    console.error('Failed to submit to Google Sheet:', error);
+    console.error("Failed to submit to Google Sheet:", error);
     return {
       success: false,
-      message: 'শিট কানেকশনে সমস্যা হয়েছে, তবে অ্যাপে সংরক্ষিত হয়েছে!',
+      message: "শিট কানেকশনে সমস্যা হয়েছে, তবে অ্যাপে সংরক্ষিত হয়েছে!",
     };
   }
 }
@@ -99,23 +101,37 @@ export async function sendRSVPToGoogleSheet(
  * Export array of RSVPs as CSV ready for Google Sheets
  */
 export function exportRSVPsToCSV(rsvps: RSVPSubmission[]) {
-  const headers = ['Guest Name', 'Contact', 'Status', 'Count', 'Ceremonies', 'Meal Choice', 'Blessing Message', 'Date'];
-  const rows = rsvps.map(r => [
+  const headers = [
+    "Guest Name",
+    "Contact",
+    "Status",
+    "Count",
+    "Ceremonies",
+    "Meal Choice",
+    "Blessing Message",
+    "Date",
+  ];
+  const rows = rsvps.map((r) => [
     `"${r.guestName.replace(/"/g, '""')}"`,
     `"${r.contact.replace(/"/g, '""')}"`,
     `"${r.attending}"`,
     r.guestCount,
-    `"${r.ceremonies.join(', ')}"`,
+    `"${r.ceremonies.join(", ")}"`,
     `"${r.mealPreference}"`,
-    `"${(r.blessingMessage || '').replace(/"/g, '""')}"`,
-    `"${r.createdAt}"`
+    `"${(r.blessingMessage || "").replace(/"/g, '""')}"`,
+    `"${r.createdAt}"`,
   ]);
 
-  const csvContent = 'data:text/csv;charset=utf-8,\uFEFF' + [headers.join(','), ...rows.map(e => e.join(','))].join('\n');
+  const csvContent =
+    "data:text/csv;charset=utf-8,\uFEFF" +
+    [headers.join(","), ...rows.map((e) => e.join(","))].join("\n");
   const encodedUri = encodeURI(csvContent);
-  const link = document.createElement('a');
-  link.setAttribute('href', encodedUri);
-  link.setAttribute('download', `Wedding_RSVP_GoogleSheets_${new Date().toISOString().slice(0, 10)}.csv`);
+  const link = document.createElement("a");
+  link.setAttribute("href", encodedUri);
+  link.setAttribute(
+    "download",
+    `Wedding_RSVP_GoogleSheets_${new Date().toISOString().slice(0, 10)}.csv`,
+  );
   document.body.appendChild(link);
   link.click();
   document.body.removeChild(link);

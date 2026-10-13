@@ -3,14 +3,16 @@ export type Language = 'bn' | 'en';
 export interface PersonInfo {
   nameBn: string;
   nameEn: string;
-  subTitleBn: string;
-  subTitleEn: string;
+  // subTitleBn: string;
+  // subTitleEn: string;
   fatherBn: string;
   fatherEn: string;
   motherBn: string;
   motherEn: string;
   grandfatherBn: string;
   grandfatherEn: string;
+  grandmotherBn: string;
+  grandmotherEn: string;
   addressBn: string;
   addressEn: string;
   bioBn: string;
@@ -30,8 +32,8 @@ export interface CeremonyItem {
   timeEn: string;
   hallBn: string;
   hallEn: string;
-  dressBn: string;
-  dressEn: string;
+  // dressBn: string;
+  // dressEn: string;
   colorScheme: string;
   icon: string;
 }
@@ -79,5 +81,5 @@ export interface WeddingSettings {
   venueAddressEn: string;
   venueMapsUrl: string;
   googleSheetsWebhookUrl: string;
-  contactPhones: { labelBn: string; labelEn: string; number: string }[];
+  contactPhones: {number: string }[];
 }

@@ -1,72 +1,66 @@
-
-import { useState } from 'react';
+import { useEffect, useState } from "react";
 import {
   BrowserRouter,
   Routes,
   Route,
-  useNavigate,
   useLocation,
-} from 'react-router-dom';
+  useNavigate,
+} from "react-router-dom";
 
-import {
-  initialWeddingSettings,
-  initialGuestbookEntries,
-} from './weddingData';
+import { initialWeddingSettings, initialGuestbookEntries } from "./weddingData";
 
-import type {
-  WeddingSettings,
-  RSVPSubmission,
-  Language,
-} from './types';
+import type { WeddingSettings, RSVPSubmission, Language } from "./types";
 
-import { weddingAudio } from './utils/audioPlayer';
-import { EnvelopeOpening } from './components/EnvelopeOpening';
-import { TopNavBar } from './components/TopNavBar';
-import { BottomNavBar } from './components/BottomNavBar';
-import { PageSelectModal } from './components/PageSelectModal';
+import { weddingAudio } from "./utils/audioPlayer";
 
-import { Page1DateWedding } from './pages/Page1DateWedding';
-import { Page2BoyGirlDetails } from './pages/Page2BoyGirlDetails';
-import { Page3ChapterIndex } from './pages/Page3ChapterIndex';
-import { Page4Story } from './pages/Page4Story';
-import { Page5Ceremonies } from './pages/Page5Ceremonies';
-import { Page6Gallery } from './pages/Page6Gallery';
-import { Page7VenueMap } from './pages/Page7VenueMap';
-import { Page8RSVP } from './pages/Page8RSVP';
-import { Page9TraditionalLetter } from './pages/Page9TraditionalLetter';
+import { EnvelopeOpening } from "./components/EnvelopeOpening";
+import { TopNavBar } from "./components/TopNavBar";
+import { BottomNavBar } from "./components/BottomNavBar";
+import { PageSelectModal } from "./components/PageSelectModal";
 
-const pageRoutes = [
-  '/wedding',
-  '/couple',
-  '/chapters',
-  '/story',
-  '/ceremonies',
-  '/gallery',
-  '/venue',
-  '/rsvp',
-  '/letter',
-];
+import { Page1DateWedding } from "./pages/Page1DateWedding";
+import { Page2BoyGirlDetails } from "./pages/Page2BoyGirlDetails";
+import { Page3ChapterIndex } from "./pages/Page3ChapterIndex";
+import { Page4Story } from "./pages/Page4Story";
+import { Page5Ceremonies } from "./pages/Page5Ceremonies";
+import { Page6Gallery } from "./pages/Page6Gallery";
+import { Page7VenueMap } from "./pages/Page7VenueMap";
+import { Page8RSVP } from "./pages/Page8RSVP";
+import { Page9TraditionalLetter } from "./pages/Page9TraditionalLetter";
+import { Page10Company } from "./pages/Page10Company";
+
+const PAGE_ROUTES = [
+  "/wedding",
+  "/couple",
+  "/chapters",
+  "/story",
+  "/ceremonies",
+  // "/gallery",
+  "/venue",
+  "/rsvp",
+  "/letter",
+  "/company-details",
+] as const;
+
+const TOTAL_PAGES = PAGE_ROUTES.length;
 
 function WeddingApp() {
   const navigate = useNavigate();
   const location = useLocation();
 
   const [showingEnvelope, setShowingEnvelope] = useState(
-    location.pathname === '/'
+    location.pathname === "/",
   );
 
-  const [language, setLanguage] = useState<Language>('bn');
+  const [language, setLanguage] = useState<Language>("bn");
   const [isMusicPlaying, setIsMusicPlaying] = useState(false);
   const [isPageModalOpen, setIsPageModalOpen] = useState(false);
 
   const [settings] = useState<WeddingSettings>(() => {
     try {
-      const stored = localStorage.getItem(
-        'wedding_invitation_settings'
-      );
-      return stored
-        ? JSON.parse(stored)
-        : initialWeddingSettings;
+      const stored = localStorage.getItem("wedding_invitation_settings");
+
+      return stored ? JSON.parse(stored) : initialWeddingSettings;
     } catch {
       return initialWeddingSettings;
     }
@@ -74,78 +68,127 @@ function WeddingApp() {
 
   const [rsvps, setRsvps] = useState<RSVPSubmission[]>(() => {
     try {
-      const stored = localStorage.getItem(
-        'wedding_invitation_rsvps'
-      );
-      return stored
-        ? JSON.parse(stored)
-        : initialGuestbookEntries;
+      const stored = localStorage.getItem("wedding_invitation_rsvps");
+
+      return stored ? JSON.parse(stored) : initialGuestbookEntries;
     } catch {
       return initialGuestbookEntries;
     }
   });
 
-  const currentPage = pageRoutes.indexOf(location.pathname) + 1;
+  // Keep the envelope state in sync with browser back/forward navigation.
+  useEffect(() => {
+    setShowingEnvelope(location.pathname === "/");
+  }, [location.pathname]);
 
-  const handlePageChange = (pageNum: number) => {
-    if (pageNum >= 1 && pageNum <= 9) {
-      setShowingEnvelope(false);
-      navigate(pageRoutes[pageNum - 1]);
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+  // Save RSVP entries whenever they change.
+  useEffect(() => {
+    try {
+      localStorage.setItem("wedding_invitation_rsvps", JSON.stringify(rsvps));
+    } catch {
+      // Continue working if browser storage is unavailable.
     }
-  };
+  }, [rsvps]);
 
-  const handleAddRSVP = (newRsvp: RSVPSubmission) => {
-    setRsvps((previous) => {
-      const updated = [newRsvp, ...previous];
+  // Change the music track when the selected language changes.
+  // If music is already playing, the new track continues playing.
+  // If music is stopped, changing language will not start it.
+  useEffect(() => {
+    let isActive = true;
 
-      try {
-        localStorage.setItem(
-          'wedding_invitation_rsvps',
-          JSON.stringify(updated)
-        );
-      } catch {
-        // Ignore storage errors.
+    const updateMusicLanguage = async () => {
+      const wasPlaying = weddingAudio.getStatus();
+
+      if (wasPlaying) {
+        const playing = await weddingAudio.play(language);
+
+        if (isActive) {
+          setIsMusicPlaying(playing);
+        }
+      } else {
+        weddingAudio.init(language);
+
+        if (isActive) {
+          setIsMusicPlaying(false);
+        }
       }
+    };
 
-      return updated;
+    void updateMusicLanguage();
+
+    return () => {
+      isActive = false;
+    };
+  }, [language]);
+
+  const currentPageIndex = PAGE_ROUTES.indexOf(
+    location.pathname as (typeof PAGE_ROUTES)[number],
+  );
+
+  const currentPage = currentPageIndex >= 0 ? currentPageIndex + 1 : 1;
+
+  const handlePageChange = (pageNumber: number) => {
+    if (pageNumber < 1 || pageNumber > TOTAL_PAGES) return;
+
+    setShowingEnvelope(false);
+    setIsPageModalOpen(false);
+
+    navigate(PAGE_ROUTES[pageNumber - 1]);
+
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
     });
   };
 
-  const handleStartMusic = () => {
-    weddingAudio.play();
-    setIsMusicPlaying(true);
+  const handleAddRSVP = (newRsvp: RSVPSubmission) => {
+    setRsvps((previous) => [newRsvp, ...previous]);
   };
 
-  const handleToggleMusic = () => {
-    setIsMusicPlaying(weddingAudio.toggle());
+  const handleStartMusic = async () => {
+    const playing = await weddingAudio.play(language);
+    setIsMusicPlaying(playing);
+  };
+
+  const handleToggleMusic = async () => {
+    if (weddingAudio.getStatus()) {
+      weddingAudio.stop();
+      setIsMusicPlaying(false);
+    } else {
+      const playing = await weddingAudio.play(language);
+      setIsMusicPlaying(playing);
+    }
   };
 
   const handleOpenEnvelopeComplete = () => {
     setShowingEnvelope(false);
-    navigate('/wedding');
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    navigate("/wedding");
+
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
 
     if (!weddingAudio.getStatus()) {
-      weddingAudio.play();
-      setIsMusicPlaying(true);
+      void handleStartMusic();
     }
   };
 
   const handleReturnToEnvelope = () => {
     setShowingEnvelope(true);
-    navigate('/');
+    setIsPageModalOpen(false);
+    navigate("/");
   };
 
   const handleSelectEnvelope = () => {
     setShowingEnvelope(true);
     setIsPageModalOpen(false);
-    navigate('/');
+    navigate("/");
   };
 
-  if (showingEnvelope && location.pathname === '/') {
+  if (showingEnvelope && location.pathname === "/") {
     return (
-      <main className="w-full min-h-screen bg-red-950">
+      <main className="min-h-screen w-full bg-red-950">
         <EnvelopeOpening
           onOpen={handleOpenEnvelopeComplete}
           language={language}
@@ -158,8 +201,12 @@ function WeddingApp() {
   }
 
   return (
-    <div className="min-h-screen w-full bg-red-950 text-white font-bengali relative flex flex-col justify-between">
-      <div className="fixed inset-0 pointer-events-none bg-[radial-gradient(#b91c1c_1px,transparent_1px)] [background-size:20px_20px] opacity-25 z-0" />
+    <div className="relative flex min-h-screen w-full flex-col justify-between bg-red-950 font-bengali text-white">
+      {/* Decorative background */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none fixed inset-0 z-0 bg-[radial-gradient(#b91c1c_1px,transparent_1px)] [background-size:20px_20px] opacity-25"
+      />
 
       <TopNavBar
         language={language}
@@ -168,12 +215,13 @@ function WeddingApp() {
         onToggleMusic={handleToggleMusic}
         onReturnToEnvelope={handleReturnToEnvelope}
         onOpenPageMenu={() => setIsPageModalOpen(true)}
-        currentPage={currentPage || 1}
-        totalPages={9}
+        currentPage={currentPage}
+        totalPages={TOTAL_PAGES}
       />
 
-      <main className="relative z-10 flex-1 flex flex-col justify-start items-center py-3 sm:py-5 px-1 sm:px-2 w-full">
+      <main className="relative z-10 flex w-full flex-1 flex-col items-center justify-start px-1 py-3 sm:px-3 sm:py-5">
         <Routes>
+          {/* Page 1: Wedding date */}
           <Route
             path="/wedding"
             element={
@@ -181,11 +229,12 @@ function WeddingApp() {
                 settings={settings}
                 language={language}
                 onNextPage={() => handlePageChange(2)}
-                onGoToRSVP={() => handlePageChange(8)}
+                onGoToRSVP={() => handlePageChange(7)}
               />
             }
           />
 
+          {/* Page 2: Couple details */}
           <Route
             path="/couple"
             element={
@@ -197,6 +246,7 @@ function WeddingApp() {
             }
           />
 
+          {/* Page 3: Chapter index */}
           <Route
             path="/chapters"
             element={
@@ -207,6 +257,7 @@ function WeddingApp() {
             }
           />
 
+          {/* Page 4: Our story */}
           <Route
             path="/story"
             element={
@@ -219,6 +270,7 @@ function WeddingApp() {
             }
           />
 
+          {/* Page 5: Wedding ceremonies */}
           <Route
             path="/ceremonies"
             element={
@@ -230,7 +282,8 @@ function WeddingApp() {
             }
           />
 
-          <Route
+          {/* Page 6: Gallery */}
+          {/* <Route
             path="/gallery"
             element={
               <Page6Gallery
@@ -239,8 +292,9 @@ function WeddingApp() {
                 onGoToIndex={() => handlePageChange(3)}
               />
             }
-          />
+          /> */}
 
+          {/* Page 7: Venue and map */}
           <Route
             path="/venue"
             element={
@@ -253,6 +307,7 @@ function WeddingApp() {
             }
           />
 
+          {/* Page 8: RSVP and guestbook */}
           <Route
             path="/rsvp"
             element={
@@ -267,6 +322,7 @@ function WeddingApp() {
             }
           />
 
+          {/* Page 9: Traditional invitation letter */}
           <Route
             path="/letter"
             element={
@@ -279,6 +335,19 @@ function WeddingApp() {
             }
           />
 
+          {/* Page 10:  company details */}
+          <Route
+            path="/company-details"
+            element={
+              <Page10Company
+                language={language}
+                onNextPage={() => handlePageChange(1)}
+                onGoToIndex={() => handlePageChange(3)}
+              />
+            }
+          />
+
+          {/* Unknown URLs go to the first wedding page */}
           <Route
             path="*"
             element={
@@ -294,8 +363,8 @@ function WeddingApp() {
       </main>
 
       <BottomNavBar
-        currentPage={currentPage || 1}
-        totalPages={9}
+        currentPage={currentPage}
+        totalPages={TOTAL_PAGES}
         onPageChange={handlePageChange}
         language={language}
       />
@@ -303,11 +372,8 @@ function WeddingApp() {
       <PageSelectModal
         isOpen={isPageModalOpen}
         onClose={() => setIsPageModalOpen(false)}
-        currentPage={currentPage || 1}
-        onSelectPage={(page) => {
-          handlePageChange(page);
-          setIsPageModalOpen(false);
-        }}
+        currentPage={currentPage}
+        onSelectPage={handlePageChange}
         onSelectEnvelope={handleSelectEnvelope}
         language={language}
       />

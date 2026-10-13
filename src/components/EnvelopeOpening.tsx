@@ -1,9 +1,8 @@
-import React, { useState } from 'react';
-import confetti from 'canvas-confetti';
-import { Sparkles, Heart, ArrowRight } from 'lucide-react';
-import { GaneshaCrest, KolkaOrnament } from './Ornaments';
-import { Language, WeddingSettings } from '../types';
-import { weddingAudio } from '../utils/audioPlayer';
+import React, { useRef, useState } from "react";
+import confetti from "canvas-confetti";
+import { Sparkles, Heart, ArrowRight } from "lucide-react";
+import { GaneshaCrest, KolkaOrnament } from "./Ornaments";
+import { Language, WeddingSettings } from "../types";
 
 interface EnvelopeOpeningProps {
   onOpen: () => void;
@@ -13,6 +12,13 @@ interface EnvelopeOpeningProps {
   isMusicPlaying: boolean;
 }
 
+type AnimationStage =
+  | "idle"
+  | "unsealing"
+  | "flap-opening"
+  | "card-rising"
+  | "transitioning";
+
 export const EnvelopeOpening: React.FC<EnvelopeOpeningProps> = ({
   onOpen,
   language,
@@ -20,286 +26,456 @@ export const EnvelopeOpening: React.FC<EnvelopeOpeningProps> = ({
   onStartMusic,
   isMusicPlaying,
 }) => {
-  // Stages: 'idle' | 'unsealing' | 'flap-opening' | 'card-rising' | 'transitioning'
-  const [animStage, setAnimStage] = useState<'idle' | 'unsealing' | 'flap-opening' | 'card-rising' | 'transitioning'>('idle');
-  const isBn = language === 'bn';
+  const [animStage, setAnimStage] = useState<AnimationStage>("idle");
+  const timerRefs = useRef<ReturnType<typeof setTimeout>[]>([]);
+  const openingRef = useRef(false);
+
+  const isBn = language === "bn";
+
+  const schedule = (callback: () => void, delay: number) => {
+    const timer = setTimeout(callback, delay);
+    timerRefs.current.push(timer);
+  };
 
   const triggerConfetti = () => {
     try {
       confetti({
-        particleCount: 65,
-        spread: 90,
-        origin: { y: 0.6 },
-        colors: ['#facc15', '#ffd700', '#dc2626', '#ffffff', '#ef4444'],
+        particleCount: 75,
+        spread: 100,
+        startVelocity: 38,
+        gravity: 0.85,
+        origin: { x: 0.5, y: 0.55 },
+        colors: ["#facc15", "#fde68a", "#dc2626", "#ffffff", "#ef4444"],
       });
-      setTimeout(() => {
+
+      schedule(() => {
         confetti({
           particleCount: 45,
           angle: 60,
-          spread: 70,
-          origin: { x: 0.1, y: 0.7 },
-          colors: ['#facc15', '#ffd700', '#dc2626'],
+          spread: 75,
+          startVelocity: 35,
+          origin: { x: 0.08, y: 0.68 },
+          colors: ["#facc15", "#ffd700", "#dc2626"],
         });
+
         confetti({
           particleCount: 45,
           angle: 120,
-          spread: 70,
-          origin: { x: 0.9, y: 0.7 },
-          colors: ['#facc15', '#ffd700', '#dc2626'],
+          spread: 75,
+          startVelocity: 35,
+          origin: { x: 0.92, y: 0.68 },
+          colors: ["#facc15", "#ffd700", "#dc2626"],
         });
-      }, 300);
+      }, 350);
     } catch {
-      // ignore
+      // Continue opening even if confetti is unavailable.
     }
   };
 
   const handleStartOpening = () => {
-    if (animStage !== 'idle') return;
+    if (openingRef.current) return;
 
-    // Start background wedding music automatically upon opening
+    openingRef.current = true;
+
     onStartMusic();
-
-    // Step 1: Break wax seal & burst festive flower confetti
-    setAnimStage('unsealing');
     triggerConfetti();
+    setAnimStage("unsealing");
 
-    // Step 2: Open top flap in 3D (0.35s)
-    setTimeout(() => {
-      setAnimStage('flap-opening');
-    }, 350);
+    schedule(() => {
+      setAnimStage("flap-opening");
+    }, 250);
 
-    // Step 3: Slide card gracefully upwards out of envelope pocket (0.75s)
-    setTimeout(() => {
-      setAnimStage('card-rising');
+    schedule(() => {
+      setAnimStage("card-rising");
     }, 750);
 
-    // Step 4: Smoothly unveil the full, glorious Page 1 with all details (1.4s)
-    setTimeout(() => {
-      setAnimStage('transitioning');
-      setTimeout(() => {
+    schedule(() => {
+      setAnimStage("transitioning");
+
+      schedule(() => {
         onOpen();
-      }, 400);
-    }, 1450);
+      }, 550);
+    }, 1550);
   };
 
   const handleDirectOpen = () => {
+    if (openingRef.current) return;
+
+    openingRef.current = true;
     onStartMusic();
     triggerConfetti();
     onOpen();
   };
 
+  const isIdle = animStage === "idle";
+  const isFlapOpen =
+    animStage === "flap-opening" ||
+    animStage === "card-rising" ||
+    animStage === "transitioning";
+
+  const isCardRising =
+    animStage === "card-rising" || animStage === "transitioning";
+
   return (
-    <div className={`min-h-screen w-full flex flex-col items-center justify-center px-3 py-6 bg-gradient-to-b from-[#450a0a] via-[#5c0e0e] to-[#3a0606] text-white relative overflow-hidden select-none perspective-1200 transition-opacity duration-500 ${
-      animStage === 'transitioning' ? 'opacity-0 scale-95' : 'opacity-100'
-    }`}>
-      {/* Decorative ambient background glows & floating flower petals */}
-      <div className="absolute top-10 left-10 w-72 h-72 bg-yellow-500/10 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute bottom-10 right-10 w-80 h-80 bg-red-600/15 rounded-full blur-3xl pointer-events-none" />
-
-      {/* Floating flower petals */}
-      <div className="absolute top-12 left-[12%] text-yellow-400/40 text-xl animate-petal pointer-events-none">🌸</div>
-      <div className="absolute top-24 right-[15%] text-red-400/40 text-2xl animate-petal [animation-delay:1.5s] pointer-events-none">🌺</div>
-      <div className="absolute bottom-16 left-[18%] text-yellow-400/40 text-lg animate-petal [animation-delay:2.5s] pointer-events-none">🌼</div>
-      <div className="absolute bottom-28 right-[10%] text-yellow-300/40 text-xl animate-petal [animation-delay:3.5s] pointer-events-none">🌸</div>
-
-      {/* Top Auspicious Header Banner */}
-      <div className="text-center mb-4 sm:mb-6 z-10 max-w-sm sm:max-w-md px-2">
-        <div className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-red-950/90 border-2 border-yellow-400 text-yellow-300 text-[11px] sm:text-xs font-serif tracking-wider shadow-lg mb-2 sm:mb-3">
-          <Sparkles className="w-3.5 h-3.5 text-yellow-400 animate-spin" />
-          <span>{isBn ? '॥ শ্রী শ্রী প্রজাপতয়ে নমঃ ॥' : '॥ Om Sri Prajapataye Namah ॥'}</span>
-          <Sparkles className="w-3.5 h-3.5 text-yellow-400 animate-spin" />
+    <div
+      className={`relative flex min-h-screen w-full flex-col items-center justify-center overflow-hidden bg-gradient-to-b from-[#450a0a] via-[#5c0e0e] to-[#3a0606] px-3 py-6 text-white transition-all duration-700 ease-in-out ${
+        animStage === "transitioning"
+          ? "scale-[1.03] opacity-0"
+          : "scale-100 opacity-100"
+      }`}
+    >
+      {/* Ambient gold lighting */}
+      <div className="pointer-events-none absolute -left-24 -top-24 h-72 w-72 rounded-full bg-yellow-500/10 blur-3xl" />
+      <div className="pointer-events-none absolute -bottom-24 -right-20 h-80 w-80 rounded-full bg-red-500/20 blur-3xl" />
+      <div className="pointer-events-none absolute left-1/2 top-1/2 h-96 w-96 -translate-x-1/2 -translate-y-1/2 rounded-full border border-yellow-400/10" />
+      <div className="pointer-events-none absolute left-1/2 top-1/2 h-[28rem] w-[28rem] -translate-x-1/2 -translate-y-1/2 rounded-full border border-yellow-400/5" />
+    
+      {/* Continuously Floating Wedding Flowers */}
+      <div className="pointer-events-none absolute inset-0 z-0 overflow-hidden">
+        {/* Left upper flower */}
+        <div
+          className="absolute left-[8%] top-[15%] text-2xl text-yellow-300/60"
+          style={{
+            animation: "floatingPetals 4s ease-in-out infinite",
+          }}
+        >
+          🌸
         </div>
-        <h1 className="text-2xl sm:text-4xl font-bold font-serif text-yellow-400 drop-shadow-md">
-          {isBn ? 'শুভ পরিণয় নিমন্ত্রণ পত্র' : 'The Royal Wedding Invitation'}
-        </h1>
-        <p className="text-xs sm:text-sm text-yellow-100/90 mt-1 font-serif">
-          {isBn ? 'ভালোবাসা ও সংস্কৃতির চিরন্তন মেলবন্ধন' : 'A Celebration of Timeless Love & Traditions'}
-        </p>
-      </div>
 
-      {/* ========================================================================= */}
-      {/* 3D LUXURY ENVELOPE STAGE                                                 */}
-      {/* ========================================================================= */}
-      <div className="relative w-full max-w-[340px] xs:max-w-[370px] sm:max-w-[420px] aspect-[4/3] flex items-center justify-center my-3 sm:my-4">
-        {/* ENVELOPE SHELL */}
+        {/* Right upper flower */}
+        <div
+          className="absolute right-[10%] top-[22%] text-3xl text-red-300/60"
+          style={{
+            animation: "floatingPetals 5s ease-in-out infinite",
+            animationDelay: "1s",
+          }}
+        >
+          🌺
+        </div>
+
+        {/* Left middle flower */}
+        <div
+          className="absolute left-[5%] top-[48%] text-xl text-yellow-200/60"
+          style={{
+            animation: "floatingPetals 4.5s ease-in-out infinite",
+            animationDelay: "0.5s",
+          }}
+        >
+          🌼
+        </div>
+
+        {/* Right middle flower */}
+        <div
+          className="absolute right-[6%] top-[55%] text-2xl text-yellow-300/60"
+          style={{
+            animation: "floatingPetals 5.5s ease-in-out infinite",
+            animationDelay: "1.5s",
+          }}
+        >
+          🌸
+        </div>
+
+        {/* Left bottom flower */}
+        <div
+          className="absolute bottom-[15%] left-[15%] text-xl text-red-300/60"
+          style={{
+            animation: "floatingPetals 4.8s ease-in-out infinite",
+            animationDelay: "2s",
+          }}
+        >
+          🌺
+        </div>
+
+        {/* Right bottom flower */}
+        <div
+          className="absolute bottom-[18%] right-[14%] text-2xl text-yellow-200/60"
+          style={{
+            animation: "floatingPetals 4.2s ease-in-out infinite",
+            animationDelay: "2.5s",
+          }}
+        >
+          🌼
+        </div>
+      </div>
+     
+      {/* Header */}
+      <div className="relative z-10 mb-7 max-w-md px-2 text-center sm:mb-10">
+        <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-yellow-400/70 bg-red-950/70 px-4 py-2 font-serif text-[10px] tracking-widest text-yellow-300 shadow-[0_0_25px_rgba(250,204,21,0.12)] sm:text-xs">
+          <Sparkles className="h-4 w-4 animate-pulse text-yellow-400" />
+
+          <span>
+            {isBn
+              ? "॥ শ্রী শ্রী প্রজাপতয়ে নমঃ ॥"
+              : "॥ Om Sri Prajapataye Namah ॥"}
+          </span>
+
+          <Sparkles className="h-4 w-4 animate-pulse text-yellow-400" />
+        </div>
+
+        <h1 className="font-serif text-2xl font-bold leading-tight text-yellow-400 drop-shadow-[0_2px_12px_rgba(250,204,21,0.25)] sm:text-4xl">
+          {isBn ? "শুভ পরিণয় নিমন্ত্রণ পত্র" : "The Royal Wedding Invitation"}
+        </h1>
+
+        <p className="mt-2 font-serif text-xs tracking-wide text-yellow-100/80 sm:text-sm">
+          {isBn
+            ? "ভালোবাসা ও সংস্কৃতির চিরন্তন মেলবন্ধন"
+            : "A Celebration of Timeless Love & Traditions"}
+        </p>
+
+        <div className="mx-auto mt-4 flex w-40 items-center gap-3">
+          <div className="h-px flex-1 bg-gradient-to-r from-transparent to-yellow-400/80" />
+          <span className="text-sm text-yellow-400">✦</span>
+          <div className="h-px flex-1 bg-gradient-to-l from-transparent to-yellow-400/80" />
+        </div>
+      </div>
+      {/* Envelope stage */}
+      <div
+        className="relative z-10 my-5 w-full max-w-[340px] sm:max-w-[420px]"
+        style={{ perspective: "1400px" }}
+      >
+        {/* Ground shadow */}
+        <div
+          className={`absolute -bottom-5 left-[10%] right-[10%] h-10 rounded-full bg-black/40 blur-xl transition-all duration-700 ${
+            isCardRising ? "scale-75 opacity-50" : "scale-100 opacity-100"
+          }`}
+        />
+
+        {/* Main envelope */}
         <div
           onClick={handleStartOpening}
-          className="relative w-full h-full rounded-2xl bg-gradient-to-br from-[#7f1d1d] via-[#991b1b] to-[#550c0c] border-2 border-yellow-400 shadow-[0_25px_50px_rgba(0,0,0,0.7)] transition-all duration-500 preserve-3d cursor-pointer group"
+          className="group relative aspect-[4/3] w-full cursor-pointer overflow-visible rounded-2xl border border-yellow-400/80 bg-gradient-to-br from-[#991b1b] via-[#7f1d1d] to-[#450a0a] shadow-[0_25px_60px_rgba(0,0,0,0.65)] transition-transform duration-500 hover:scale-[1.01]"
+          style={{ transformStyle: "preserve-3d" }}
         >
-          {/* Inner Back Lining Texture (Golden Silk) */}
-          <div className="absolute inset-2 rounded-xl bg-gradient-to-b from-yellow-200 via-yellow-100 to-yellow-300 border border-yellow-500/50 shadow-inner flex flex-col items-center justify-center opacity-90 overflow-hidden">
-            <div className="absolute inset-0 bg-[radial-gradient(#ca8a04_1px,transparent_1px)] [background-size:12px_12px] opacity-25" />
-            <GaneshaCrest className="w-16 h-16 text-yellow-700/30" />
+          {/* Decorative border */}
+          <div className="pointer-events-none absolute inset-2 z-10 rounded-xl border border-yellow-300/30" />
+
+          {/* Golden inner lining */}
+          <div className="absolute inset-2 overflow-hidden rounded-xl border border-yellow-500/50 bg-gradient-to-br from-yellow-200 via-yellow-100 to-yellow-300 shadow-inner">
+            <div className="absolute inset-0 bg-[radial-gradient(#ca8a04_1px,transparent_1px)] opacity-20 [background-size:12px_12px]" />
+
+            <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 opacity-25">
+              <GaneshaCrest className="h-28 w-28 text-yellow-800 sm:h-36 sm:w-36" />
+            </div>
+
+            <div className="absolute inset-x-0 bottom-5 text-center font-serif text-xs tracking-[0.3em] text-red-900/40">
+              ✦ SHUBHO BIBAHO ✦
+            </div>
           </div>
 
-          {/* ===================================================================== */}
-          {/* THE WEDDING INVITATION CARD (SLIDES OUT PROMINENTLY)                   */}
-          {/* ===================================================================== */}
+          {/* Invitation card */}
           <div
-            className={`absolute left-3 right-3 rounded-xl bg-white border-2 border-yellow-400 shadow-2xl p-3.5 sm:p-4 flex flex-col justify-between text-red-950 transition-all duration-700 ease-out z-25 ${
-              animStage === 'idle' || animStage === 'unsealing'
-                ? 'top-4 bottom-4 translate-y-0 opacity-0 pointer-events-none'
-                : animStage === 'flap-opening'
-                ? 'top-4 bottom-4 translate-y-0 opacity-90'
-                : /* card-rising or transitioning */
-                  'top-[-20%] sm:top-[-25%] bottom-[20%] sm:bottom-[25%] opacity-100 scale-102 shadow-[0_20px_45px_rgba(0,0,0,0.6)] ring-2 ring-yellow-400'
+            className={`absolute left-[5%] right-[5%] z-20 flex flex-col justify-between rounded-xl border-2 border-yellow-500 bg-gradient-to-b from-white via-[#fffdf5] to-yellow-50 p-3 text-red-950 shadow-[0_10px_35px_rgba(0,0,0,0.3)] sm:p-5 ${
+              isCardRising
+                ? "top-[-25%] bottom-[22%] scale-[1.02] opacity-100"
+                : isFlapOpen
+                  ? "top-[5%] bottom-[5%] scale-100 opacity-100"
+                  : "top-[8%] bottom-[8%] scale-95 opacity-0"
             }`}
+            style={{
+              transition:
+                "top 900ms cubic-bezier(0.22,1,0.36,1), bottom 900ms cubic-bezier(0.22,1,0.36,1), transform 900ms cubic-bezier(0.22,1,0.36,1), opacity 450ms ease",
+            }}
           >
-            {/* Top of Card */}
-            <div className="text-center">
-              <div className="flex justify-center items-center gap-1 mb-0.5">
-                <KolkaOrnament className="w-4 h-4 text-yellow-500" />
-                <GaneshaCrest className="w-7 h-7 text-red-800" />
-                <KolkaOrnament className="w-4 h-4 text-yellow-500 -scale-x-100" />
+            {/* Card decoration */}
+            <div className="pointer-events-none absolute inset-1.5 rounded-lg border border-yellow-500/50" />
+
+            <div className="relative text-center">
+              <div className="mb-1 flex items-center justify-center gap-2">
+                <KolkaOrnament className="h-5 w-5 text-yellow-600" />
+                <GaneshaCrest className="h-9 w-9 text-red-800" />
+                <KolkaOrnament className="h-5 w-5 -scale-x-100 text-yellow-600" />
               </div>
-              <span className="text-[10px] font-serif font-bold text-red-800 uppercase tracking-wider block">
-                {isBn ? '॥ শুভ বিবাহ নিমন্ত্রণ পত্র ॥' : '॥ Royal Wedding Invitation ॥'}
+
+              <span className="block font-serif text-[9px] font-bold uppercase tracking-[0.2em] text-red-800 sm:text-xs">
+                {isBn
+                  ? "॥ শুভ বিবাহ নিমন্ত্রণ পত্র ॥"
+                  : "॥ Royal Wedding Invitation ॥"}
               </span>
             </div>
 
-            {/* Couple Names */}
-            <div className="text-center my-auto py-1">
-              <h2 className="text-base sm:text-lg font-bold font-serif text-red-900 tracking-wide">
+            {/* Couple details */}
+            <div className="relative my-auto py-2 text-center">
+              <h2 className="font-serif text-base font-bold leading-relaxed text-red-900 sm:text-xl">
                 {isBn
                   ? `${settings.groom.nameBn} ও ${settings.bride.nameBn}`
                   : `${settings.groom.nameEn} & ${settings.bride.nameEn}`}
               </h2>
-              <div className="flex items-center justify-center gap-1 text-[11px] font-bold text-red-700 font-serif mt-0.5">
-                <Heart className="w-3 h-3 fill-red-600 text-red-600" />
-                <span>{isBn ? settings.weddingDateBn : settings.weddingDateEn}</span>
+
+              <div className="mt-2 flex items-center justify-center gap-2 font-serif text-[10px] font-semibold text-red-700 sm:text-xs">
+                <Heart className="h-3.5 w-3.5 fill-red-600 text-red-600" />
+                <span>
+                  {isBn ? settings.weddingDateBn : settings.weddingDateEn}
+                </span>
+                <Heart className="h-3.5 w-3.5 fill-red-600 text-red-600" />
+              </div>
+
+              <div className="mx-auto mt-3 flex w-24 items-center justify-center gap-2">
+                <div className="h-px flex-1 bg-yellow-500/70" />
+                <span className="text-xs text-yellow-600">✦</span>
+                <div className="h-px flex-1 bg-yellow-500/70" />
               </div>
             </div>
 
-            {/* Hint */}
-            <div className="pt-1 border-t border-yellow-300 text-center text-[10px] text-red-900 font-serif font-semibold">
-              {isBn ? 'আমন্ত্রণ পত্র উন্মোচিত হচ্ছে...' : 'Unveiling Invitation Details...'}
+            <div className="relative border-t border-yellow-400/60 pt-2 text-center font-serif text-[9px] font-semibold text-red-800 sm:text-[11px]">
+              {isBn
+                ? "আমন্ত্রণ পত্র উন্মোচিত হচ্ছে..."
+                : "A Beautiful Celebration of Love"}
             </div>
           </div>
 
-          {/* FRONT POCKET (Lower triangular & side envelope folds) */}
-          <div className="absolute inset-0 rounded-2xl pointer-events-none z-30 overflow-hidden">
-            {/* Left triangle fold */}
-            <div
-              className="absolute inset-0 bg-gradient-to-r from-[#881313] to-[#6e1010] shadow-[2px_0_10px_rgba(0,0,0,0.3)] border-l-2 border-yellow-400/80"
-              style={{ clipPath: 'polygon(0 0, 0 100%, 50% 50%)' }}
-            />
-            {/* Right triangle fold */}
-            <div
-              className="absolute inset-0 bg-gradient-to-l from-[#881313] to-[#6e1010] shadow-[-2px_0_10px_rgba(0,0,0,0.3)] border-r-2 border-yellow-400/80"
-              style={{ clipPath: 'polygon(100% 0, 100% 100%, 50% 50%)' }}
-            />
-            {/* Bottom triangle fold */}
-            <div
-              className="absolute inset-0 bg-gradient-to-t from-[#600e0e] via-[#751212] to-[#881313] shadow-[0_-3px_12px_rgba(0,0,0,0.35)] border-b-2 border-yellow-400/80"
-              style={{ clipPath: 'polygon(0 100%, 100% 100%, 50% 48%)' }}
-            />
-          </div>
-
-          {/* TOP FOLDING FLAP (Flips UPWARD in 3D from 0deg to -180deg) */}
+          {/* Left envelope fold */}
           <div
-            className={`absolute top-0 left-0 right-0 h-1/2 z-35 origin-top transition-transform duration-700 preserve-3d ${
-              animStage === 'idle' || animStage === 'unsealing'
-                ? 'rotate-x-0'
-                : '-rotate-x-180'
-            }`}
+            className="pointer-events-none absolute inset-0 z-30 rounded-2xl bg-gradient-to-r from-[#881313] via-[#7f1d1d]/95 to-transparent"
+            style={{
+              clipPath: "polygon(0 0, 0 100%, 50% 50%)",
+              filter: "drop-shadow(2px 0 4px rgba(0,0,0,0.2))",
+            }}
+          />
+
+          {/* Right envelope fold */}
+          <div
+            className="pointer-events-none absolute inset-0 z-30 rounded-2xl bg-gradient-to-l from-[#881313] via-[#7f1d1d]/95 to-transparent"
+            style={{
+              clipPath: "polygon(100% 0, 100% 100%, 50% 50%)",
+              filter: "drop-shadow(-2px 0 4px rgba(0,0,0,0.2))",
+            }}
+          />
+
+          {/* Bottom envelope pocket */}
+          <div
+            className="pointer-events-none absolute inset-0 z-30 rounded-2xl bg-gradient-to-t from-[#450a0a] via-[#751212] to-[#991b1b]"
+            style={{
+              clipPath: "polygon(0 100%, 100% 100%, 50% 48%)",
+              filter: "drop-shadow(0 -3px 8px rgba(0,0,0,0.25))",
+            }}
+          />
+
+          {/* 3D opening top flap */}
+          <div
+            className="absolute left-0 right-0 top-0 z-40 h-1/2"
+            style={{
+              transformOrigin: "top center",
+              transform: isFlapOpen ? "rotateX(-180deg)" : "rotateX(0deg)",
+              transformStyle: "preserve-3d",
+              transition: "transform 850ms cubic-bezier(0.22,1,0.36,1)",
+              pointerEvents: "none",
+            }}
           >
-            {/* Flap Outer (Red with Gold Border facing guest) */}
+            {/* Flap front */}
             <div
-              className="absolute inset-0 bg-gradient-to-b from-[#8f1515] to-[#690f0f] border-t-2 border-yellow-400 shadow-[0_6px_15px_rgba(0,0,0,0.4)] flex flex-col items-center justify-start pt-2 backface-hidden"
-              style={{ clipPath: 'polygon(0 0, 100% 0, 50% 100%)' }}
+              className="absolute inset-0 flex flex-col items-center justify-start rounded-t-xl border-t-2 border-yellow-400 bg-gradient-to-b from-[#a51c1c] via-[#8f1515] to-[#600e0e] pt-3 shadow-[0_8px_18px_rgba(0,0,0,0.3)]"
+              style={{
+                clipPath: "polygon(0 0, 100% 0, 50% 100%)",
+                backfaceVisibility: "hidden",
+              }}
             >
-              <div className="flex items-center gap-1 text-yellow-400 pt-0.5">
-                <span className="text-[10px]">✦</span>
-                <span className="text-[11px] sm:text-xs font-serif font-bold tracking-widest">{isBn ? 'শুভ পরিণয়' : 'Shubho Bibaho'}</span>
-                <span className="text-[10px]">✦</span>
+              <div className="flex items-center gap-2 pt-1 text-yellow-300">
+                <span className="text-xs">✦</span>
+                <span className="font-serif text-[11px] font-bold tracking-[0.2em] sm:text-sm">
+                  {isBn ? "পরম স্নেহের শুভ আমন্ত্রণ" : "Shubho Bibaho"}
+                </span>
+                <span className="text-xs">✦</span>
               </div>
             </div>
 
-            {/* Flap Inner (Golden Silk Lining when flipped open) */}
+            {/* Flap gold reverse */}
             <div
-              className="absolute inset-0 bg-gradient-to-b from-yellow-300 via-yellow-200 to-yellow-400 border border-yellow-500 shadow-inner flex items-center justify-center [transform:rotateX(180deg)] backface-hidden"
-              style={{ clipPath: 'polygon(0 0, 100% 0, 50% 100%)' }}
+              className="absolute inset-0 flex items-center justify-center border border-yellow-500 bg-gradient-to-br from-yellow-200 via-yellow-300 to-yellow-500 shadow-inner"
+              style={{
+                clipPath: "polygon(0 0, 100% 0, 50% 100%)",
+                transform: "rotateX(180deg)",
+                backfaceVisibility: "hidden",
+              }}
             >
-              <div className="text-red-950 font-serif font-bold text-xs opacity-60">ॐ</div>
+              <span className="mb-3 font-serif text-xl text-red-900/60">ॐ</span>
             </div>
           </div>
 
-          {/* ===================================================================== */}
-          {/* GOLDEN RIBBON BAND (Unlocks when clicked)                             */}
-          {/* ===================================================================== */}
+          {/* Gold ribbon */}
           <div
-            className={`absolute top-1/2 -translate-y-1/2 left-0 right-0 h-9 z-36 pointer-events-none transition-all duration-400 flex items-center justify-between px-2 bg-gradient-to-r from-yellow-400/90 via-yellow-200 to-yellow-400/90 border-y-2 border-yellow-500 shadow-md ${
-              animStage !== 'idle' ? 'opacity-0 scale-x-0' : 'opacity-100 scale-x-100'
+            className={`pointer-events-none absolute left-0 right-0 top-1/2 z-40 flex h-9 -translate-y-1/2 items-center justify-between border-y-2 border-yellow-500 bg-gradient-to-r from-yellow-500 via-yellow-200 to-yellow-500 px-3 shadow-md transition-all duration-500 ${
+              isIdle ? "scale-x-100 opacity-100" : "scale-x-0 opacity-0"
             }`}
           >
-            <div className="w-2 h-2 rounded-full bg-red-800" />
-            <span className="text-[10px] sm:text-xs font-serif font-bold text-red-950 tracking-wider">
-              {isBn ? 'পরম স্নেহের শুভ আমন্ত্রণ' : 'Royal Wedding Invitation'}
-            </span>
-            <div className="w-2 h-2 rounded-full bg-red-800" />
+            <span className="h-2 w-2 rounded-full bg-red-800" />
+
+            {/* <span className="font-serif text-[10px] font-bold tracking-wider text-red-950 sm:text-xs">
+              {isBn ? "পরম স্নেহের শুভ আমন্ত্রণ" : "Royal Wedding Invitation"}
+            </span> */}
+
+            <span className="h-2 w-2 rounded-full bg-red-800" />
           </div>
 
-          {/* ===================================================================== */}
-          {/* 3D EMBOSSED WAX SEAL BUTTON (CENTERPIECE)                              */}
-          {/* ===================================================================== */}
+          {/* Wax seal */}
           <div
-            className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-40 transition-all duration-400 ${
-              animStage === 'idle'
-                ? 'scale-100 group-hover:scale-110'
-                : animStage === 'unsealing'
-                ? 'scale-125 opacity-90 rotate-12'
-                : 'scale-0 opacity-0 pointer-events-none'
+            className={`absolute left-1/2 top-1/2 z-50 -translate-x-1/2 -translate-y-1/2 transition-all duration-500 ${
+              isIdle
+                ? "scale-100 opacity-100 group-hover:scale-110"
+                : animStage === "unsealing"
+                  ? "scale-125 rotate-12 opacity-0"
+                  : "pointer-events-none scale-50 opacity-0"
             }`}
           >
-            {/* Pulsing golden aura glow */}
-            <div className="relative flex items-center justify-center w-16 h-16 sm:w-18 sm:h-18 rounded-full bg-gradient-to-br from-red-600 via-red-700 to-red-950 border-4 border-yellow-400 shadow-[0_0_25px_rgba(250,204,21,0.8),0_10px_20px_rgba(0,0,0,0.5)] animate-seal">
-              {/* Inner seal ring */}
-              <div className="w-12 h-12 sm:w-13 sm:h-13 rounded-full border-2 border-dashed border-yellow-300 flex flex-col items-center justify-center text-yellow-300 bg-red-800/80 shadow-inner">
-                <Heart className="w-3.5 h-3.5 fill-yellow-400 text-yellow-400 animate-bounce" />
-                <span className="text-[9px] font-bold tracking-tight text-yellow-200">
-                  {isBn ? 'অ & শ্রে' : 'A & S'}
+            {/* Gold outer ring */}
+            <div className="relative flex h-[76px] w-[76px] items-center justify-center rounded-full border-[4px] border-yellow-400 bg-gradient-to-br from-red-500 via-red-800 to-red-950 shadow-[0_0_25px_rgba(250,204,21,0.55),0_12px_25px_rgba(0,0,0,0.5)] sm:h-[88px] sm:w-[88px]">
+              <div className="flex h-[58px] w-[58px] flex-col items-center justify-center rounded-full border-2 border-dashed border-yellow-300 bg-red-900/80 text-yellow-300 shadow-inner sm:h-[68px] sm:w-[68px]">
+                <Heart className="h-4 w-4 animate-pulse fill-yellow-400 text-yellow-400" />
+
+                <span className="mt-1 font-serif text-[10px] font-bold tracking-wider">
+                  {isBn ? "অ & অ" : "A & A"}
                 </span>
               </div>
 
-              {/* Sparkle badge */}
-              <div className="absolute -top-1 -right-1 p-1 rounded-full bg-yellow-400 text-red-950 shadow">
-                <Sparkles className="w-3 h-3" />
+              <div className="absolute -right-1 -top-1 rounded-full bg-yellow-400 p-1.5 text-red-950 shadow-lg">
+                <Sparkles className="h-3 w-3" />
               </div>
             </div>
           </div>
         </div>
       </div>
-
-      {/* ========================================================================= */}
-      {/* INTERACTIVE INSTRUCTIONS / CTA BUTTONS                                    */}
-      {/* ========================================================================= */}
-      <div className="mt-4 sm:mt-6 z-20 flex flex-col items-center gap-2">
-        {animStage === 'idle' ? (
+      {/* Instructions and buttons */}
+      <div className="relative z-50 mt-5 flex flex-col items-center gap-3 text-center sm:mt-7">
+        {isIdle ? (
           <>
             <button
+              type="button"
               onClick={handleStartOpening}
-              className="px-6 sm:px-7 py-3 rounded-full bg-yellow-400 hover:bg-yellow-300 text-red-950 font-serif font-bold text-sm sm:text-base border-2 border-yellow-200 shadow-xl active:scale-95 transition-all flex items-center gap-2 group"
+              className="group flex items-center gap-3 rounded-full border-2 border-yellow-200 bg-gradient-to-r from-yellow-500 via-yellow-300 to-yellow-500 px-6 py-3 font-serif text-sm font-bold text-red-950 shadow-[0_8px_30px_rgba(250,204,21,0.2)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_12px_35px_rgba(250,204,21,0.35)] active:scale-95 sm:px-8 sm:py-3.5 sm:text-base"
             >
-              <span>{isBn ? '✉️ খাম খুলতে এখানে ক্লিক করুন' : '✉️ Tap to Open The Envelope'}</span>
-              <ArrowRight className="w-4 h-4 text-red-950 group-hover:translate-x-1 transition-transform" />
-            </button>
-            <div className="flex items-center gap-3">
-              <span className="text-xs text-yellow-200 font-serif">
-                {isBn ? 'বা মোমচিহ্নে ট্যাপ করুন' : 'Or tap the wax seal'}
+              <span>
+                {isBn
+                  ? "✉️ খাম খুলতে এখানে ক্লিক করুন"
+                  : "✉️ Open Your Invitation"}
               </span>
+
+              <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
+            </button>
+
+            <div className="flex flex-wrap items-center justify-center gap-3">
+              <span className="font-serif text-xs text-yellow-200/80">
+                {isBn ? "বা মোমচিহ্নে ট্যাপ করুন" : "Or tap the wax seal"}
+              </span>
+
               <span className="text-yellow-400/50">•</span>
+
               <button
+                type="button"
                 onClick={handleDirectOpen}
-                className="text-xs text-yellow-300 font-serif underline hover:text-white"
+                className="font-serif text-xs text-yellow-300 underline decoration-yellow-400/50 underline-offset-4 transition-colors hover:text-white"
               >
-                {isBn ? 'সরাসরি আমন্ত্রণ দেখুন ›' : 'Skip directly to invitation ›'}
+                {isBn ? "সরাসরি আমন্ত্রণ দেখুন ›" : "Skip to invitation ›"}
               </button>
             </div>
           </>
         ) : (
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-red-950 border-2 border-yellow-400 text-yellow-300 text-xs sm:text-sm font-serif font-bold shadow-lg animate-pulse">
-            <Sparkles className="w-4 h-4 text-yellow-400" />
-            <span>{isBn ? 'আমন্ত্রণ পত্র উন্মোচিত হচ্ছে...' : 'Opening Wedding Invitation...'}</span>
+          <div className="inline-flex items-center gap-2 rounded-full border border-yellow-400/70 bg-red-950/90 px-5 py-3 font-serif text-xs font-bold text-yellow-300 shadow-lg sm:text-sm">
+            <Sparkles className="h-4 w-4 animate-spin text-yellow-400" />
+
+            <span>
+              {isBn
+                ? "আমন্ত্রণ পত্র উন্মোচিত হচ্ছে..."
+                : "Opening Your Wedding Invitation..."}
+            </span>
           </div>
         )}
       </div>
