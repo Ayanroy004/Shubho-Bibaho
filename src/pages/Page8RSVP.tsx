@@ -161,6 +161,13 @@ export const Page8RSVP: React.FC<Page8Props> = ({
   const confirmSubmission = async () => {
     if (!pendingSubmission || isSubmitting) return;
 
+    console.log("Confirm button clicked");
+    console.log("Pending RSVP:", pendingSubmission);
+    console.log("Google Sheets URL:", settings.googleSheetsWebhookUrl);
+    console.log(
+      "Webhook from env:",  
+      import.meta.env.VITE_GOOGLE_SHEETS_WEBHOOK_URL,
+    );
     setIsSubmitting(true);
     setSubmissionFeedback(null);
 
@@ -645,9 +652,7 @@ export const Page8RSVP: React.FC<Page8Props> = ({
               <Send className="h-4 w-4 shrink-0 text-yellow-400" />
 
               <span>
-                {isBn
-                  ? "তথ্য যাচাই করুন ও এগিয়ে যান"
-                  : "Review & Continue"}
+                {isBn ? "তথ্য যাচাই করুন ও এগিয়ে যান" : "Review & Continue"}
               </span>
             </button>
           </div>

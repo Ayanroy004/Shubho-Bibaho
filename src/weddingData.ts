@@ -57,7 +57,7 @@ export const initialWeddingSettings: WeddingSettings = {
   venueAddressBn: "মাতিশ্বর বসুপাড়া পূর্ব বর্ধমান",
   venueAddressEn: "Matishwar Basupara East Burdwan",
   venueMapsUrl: "https://maps.app.goo.gl/pNfPZdbKAZdeDfx66",
-  googleSheetsWebhookUrl: "https://script.google.com/macros/s/AKfycbzmpb48zRBtWiR7777JB-TgY-p2OPvx14rnuHY8RzwddGjIp4YBgkpwrCzFPKHnobHk/exec",
+  googleSheetsWebhookUrl: import.meta.env.VITE_GOOGLE_SHEETS_WEBHOOK_URL,
   contactPhones: [
     {
       // labelBn: "বরের পরিবার (শ্রী সুভাষ রায়)",
