@@ -1,7 +1,7 @@
+
 import React, { useState, useRef } from "react";
 import {
   Share2,
-  Printer,
   RotateCcw,
   Check,
   Download,
@@ -31,82 +31,126 @@ export const Page9TraditionalLetter: React.FC<Page9Props> = ({
 }) => {
   const isBn = language === "bn";
   const letterRef = useRef<HTMLDivElement>(null);
-  const [copiedShare, setCopiedShare] = useState(false);
+
   const [isGeneratingPdf, setIsGeneratingPdf] = useState(false);
   const [pdfSuccess, setPdfSuccess] = useState(false);
 
   const handleDownloadPdf = async () => {
-    if (!letterRef.current || isGeneratingPdf) return;
+    const element = letterRef.current;
+
+    if (!element || isGeneratingPdf) return;
 
     setIsGeneratingPdf(true);
     setPdfSuccess(false);
 
     try {
-      const element = letterRef.current;
+      // Fixed PDF capture dimensions, independent of device screen.
+      const CAPTURE_WIDTH = 672;
+      const CAPTURE_VIEWPORT_WIDTH = 1200;
 
-      // Capture only the invitation card.
       const canvas = await html2canvas(element, {
         scale: 2,
         useCORS: true,
         allowTaint: false,
         backgroundColor: "#ffffff",
         logging: false,
+
+        // Never use the current mobile/tablet viewport width.
+        windowWidth: CAPTURE_VIEWPORT_WIDTH,
+        windowHeight: 1600,
+
+        // Capture the invitation at a consistent width.
+        width: CAPTURE_WIDTH,
+
         scrollX: 0,
         scrollY: 0,
-        windowWidth: document.documentElement.clientWidth,
-        windowHeight: document.documentElement.clientHeight,
 
         onclone: (clonedDocument) => {
-          // Hide navigation in the cloned document, if present.
-          clonedDocument.querySelectorAll(".top-nav-bar").forEach((nav) => {
-            (nav as HTMLElement).style.setProperty(
-              "display",
-              "none",
-              "important",
-            );
-          });
+          // Hide navigation elements in the cloned document.
+          clonedDocument
+            .querySelectorAll(".top-nav-bar")
+            .forEach((nav) => {
+              (nav as HTMLElement).style.setProperty(
+                "display",
+                "none",
+                "important"
+              );
+            });
 
-          // Reset positioning on the invitation card.
-          const card = clonedDocument.getElementById("traditional-letter-card");
+          const card = clonedDocument.getElementById(
+            "traditional-letter-card"
+          ) as HTMLElement | null;
 
           if (card) {
-            card.style.setProperty("position", "relative", "important");
+            // Force the same desktop-sized card on every device.
+            card.style.setProperty(
+              "width",
+              `${CAPTURE_WIDTH}px`,
+              "important"
+            );
+            card.style.setProperty(
+              "min-width",
+              `${CAPTURE_WIDTH}px`,
+              "important"
+            );
+            card.style.setProperty(
+              "max-width",
+              `${CAPTURE_WIDTH}px`,
+              "important"
+            );
+            card.style.setProperty(
+              "box-sizing",
+              "border-box",
+              "important"
+            );
+
+            // Remove positioning that could shift the capture.
+            card.style.setProperty(
+              "position",
+              "relative",
+              "important"
+            );
             card.style.setProperty("top", "auto", "important");
+            card.style.setProperty("left", "auto", "important");
             card.style.setProperty("transform", "none", "important");
-            card.style.setProperty("margin-top", "0", "important");
+            card.style.setProperty("margin", "0", "important");
             card.style.setProperty("overflow", "visible", "important");
+
+            // Ensure the PDF uses the full invitation content.
+            card.style.setProperty("height", "auto", "important");
+            card.style.setProperty("max-height", "none", "important");
           }
         },
       });
 
+      // Convert the complete invitation to a high-quality image.
+      const imgData = canvas.toDataURL("image/jpeg", 0.98);
 
-
-      
-
-      const imgData = canvas.toDataURL("image/jpeg", 0.95);
-
+      // Always generate an A4 portrait PDF.
       const pdf = new jsPDF({
         orientation: "portrait",
         unit: "mm",
         format: "a4",
+        compress: true,
       });
 
       const pdfWidth = pdf.internal.pageSize.getWidth();
       const pdfHeight = pdf.internal.pageSize.getHeight();
-      const margin = 10;
 
+      const margin = 10;
       const availableWidth = pdfWidth - margin * 2;
       const availableHeight = pdfHeight - margin * 2;
 
-      // Calculate a single scale that preserves the card's aspect ratio.
+      // Fit the complete card inside A4 without stretching or cropping.
       const scale = Math.min(
         availableWidth / canvas.width,
-        availableHeight / canvas.height,
+        availableHeight / canvas.height
       );
 
       const imageWidth = canvas.width * scale;
       const imageHeight = canvas.height * scale;
 
+      // Center the invitation horizontally and vertically.
       const posX = (pdfWidth - imageWidth) / 2;
       const posY = (pdfHeight - imageHeight) / 2;
 
@@ -118,28 +162,42 @@ export const Page9TraditionalLetter: React.FC<Page9Props> = ({
         imageWidth,
         imageHeight,
         undefined,
-        "FAST",
+        "FAST"
       );
 
+      const safeGroomName = (
+        isBn ? settings.groom.nameBn : settings.groom.nameEn
+      ).replace(/[<>:"/\\|?*\u0000-\u001F]/g, "-");
+
+      const safeBrideName = (
+        isBn ? settings.bride.nameBn : settings.bride.nameEn
+      ).replace(/[<>:"/\\|?*\u0000-\u001F]/g, "-");
+
       const fileName = isBn
-        ? `শুভ-পরিণয়-নিমন্ত্রণ-লিপি-${settings.groom.nameBn}-${settings.bride.nameBn}.pdf`
-        : `Wedding-Invitation-${settings.groom.nameEn}-${settings.bride.nameEn}.pdf`;
+        ? `শুভ-পরিণয়-নিমন্ত্রণ-লিপি-${safeGroomName}-${safeBrideName}.pdf`
+        : `Wedding-Invitation-${safeGroomName}-${safeBrideName}.pdf`;
 
       pdf.save(fileName);
 
       setPdfSuccess(true);
-      setTimeout(() => setPdfSuccess(false), 3500);
+
+      window.setTimeout(() => {
+        setPdfSuccess(false);
+      }, 3500);
     } catch (err) {
       console.error("Failed to generate PDF:", err);
-      window.print();
+
+      // Do not silently switch to the browser's device-dependent
+      // print layout. Show the error for easier debugging.
+      window.alert(
+        isBn
+          ? "পিডিএফ তৈরি করা যায়নি। অনুগ্রহ করে আবার চেষ্টা করুন।"
+          : "Could not generate the PDF. Please try again."
+      );
     } finally {
       setIsGeneratingPdf(false);
     }
   };
-
-  // const handlePrint = () => {
-  //   window.print();
-  // };
 
   const handleShareWhatsApp = () => {
     const text = isBn
@@ -153,7 +211,7 @@ export const Page9TraditionalLetter: React.FC<Page9Props> = ({
 বিনীত,
 শ্রী রঘুনাথ দে ও শ্রীমতী মৌসুমী দে
 
-📍 নিজ বাসভবন ( তারাকনাথ দে স্মৃতি ভবন ), ${settings.groom.addressBn}
+📍 নিজ বাসভবন (তারাকনাথ দে স্মৃতি ভবন), ${settings.groom.addressBn}
 
 💌 সম্পূর্ণ নিমন্ত্রণ পত্র:
 ${window.location.href}`
@@ -166,37 +224,36 @@ Your presence with family and blessings are warmly requested.
 With regards,
 Shri Raghunath De & Smt. Mousumi De
 
-📍 Own Residence ( Tarakanath De Smriti Bhavan ), ${settings.groom.addressEn}
+📍 Own Residence (Tarakanath De Smriti Bhavan), ${settings.groom.addressEn}
 
 💌 View the invitation:
 ${window.location.href}`;
+
     window.open(
       `https://api.whatsapp.com/send?text=${encodeURIComponent(text)}`,
-      "_blank",
+      "_blank"
     );
   };
 
-  // const handleCopyLink = () => {
-  //   navigator.clipboard.writeText(window.location.href);
-  //   setCopiedShare(true);
-  //   setTimeout(() => setCopiedShare(false), 2000);
-  // };
-
   return (
     <div className="w-full max-w-2xl mx-auto px-2.5 sm:px-4 py-4 pb-28 text-red-950">
-      {/* Traditional Scroll Border Card to be captured for PDF */}
+      {/* Invitation card captured for PDF */}
       <div
         ref={letterRef}
         id="traditional-letter-card"
         className="relative rounded-2xl sm:rounded-3xl p-4 sm:p-7 md:p-9 bg-white border-4 border-double border-yellow-400 shadow-[0_15px_40px_rgba(127,29,29,0.2)] print:border-none print:shadow-none print:p-2"
-        style={{ backgroundColor: "#ffffff", color: "#450a0a" }}
+        style={{
+          backgroundColor: "#ffffff",
+          color: "#450a0a",
+        }}
       >
-        {/* Ornate Corner Accents */}
+        {/* Ornate corner accents */}
         <div className="ornate-corner-tl" />
         <div className="ornate-corner-tr" />
         <div className="ornate-corner-bl" />
         <div className="ornate-corner-br" />
-        {/* Vintage Top Header */}
+
+        {/* Header */}
         <div className="text-center mb-4 sm:mb-6">
           <div className="flex justify-center items-center gap-2 sm:gap-3 mb-1 sm:mb-2">
             <KolkaOrnament className="w-6 sm:w-8 h-6 sm:h-8 text-yellow-500" />
@@ -211,48 +268,66 @@ ${window.location.href}`;
           </div>
 
           <h2 className="text-2xl sm:text-4xl font-bold font-serif text-red-900 mt-1 md:mt-3">
-            {isBn ? "ঐতিহ্যবাহী নিমন্ত্রণ লিপি" : "Traditional Formal Letter"}
+            {isBn
+              ? "ঐতিহ্যবাহী নিমন্ত্রণ লিপি"
+              : "Traditional Formal Letter"}
           </h2>
+
           <div className="text-xs text-red-800 font-serif mt-0.5">
             {isBn
               ? "সবিনয় নিবেদন ও আশীর্বাদের সনাতনী চিঠি"
               : "Sanatan Vedic Wedding Epistle & Family Regards"}
           </div>
         </div>
+
         <MandapDivider className="my-3 sm:my-4" />
-        {/* Formal Letter Body */}
+
+        {/* Formal letter body */}
         <div className="font-serif text-stone-800 text-xs sm:text-sm leading-relaxed space-y-3 px-1 sm:px-4 text-justify">
           <p className="font-bold text-red-900">
-            {isBn ? "সবিনয় নিবেদন," : "Respected Elders & Dear Friends,"}
+            {isBn
+              ? "সবিনয় নিবেদন,"
+              : "Respected Elders & Dear Friends,"}
           </p>
 
           <p>
             {isBn
               ? `দিন, মাস, বছর, যুগ পেরিয়ে সেই শুভক্ষণ উপস্থিত। যখন প্রকৃতির নিয়মে দুজন অচ্ছেদ্য আপনজন সহআনন্দের সঙ্গে মিলিত হয়ে আগামী ${settings.weddingDateBn} রবিবার শুভ লগ্নে। আমাদের পুত্র কল্যাণীয় `
-              : `After days, months, years, and countless cherished moments, the auspicious day we have been waiting for has finally arrived. By the grace of the Almighty and in accordance with the beautiful course of nature, two hearts are about to unite in a bond of love and togetherness. With immense joy, we cordially invite you to the wedding ceremony of our beloved son, `}
+              : "After days, months, years, and countless cherished moments, the auspicious day we have been waiting for has finally arrived. By the grace of the Almighty and in accordance with the beautiful course of nature, two hearts are about to unite in a bond of love and togetherness. With immense joy, we cordially invite you to the wedding ceremony of our beloved son, "}
+
             <span className="font-bold text-red-900 underline decoration-yellow-400">
-              {isBn ? settings.groom.nameBn : settings.groom.nameEn}
+              {isBn
+                ? settings.groom.nameBn
+                : settings.groom.nameEn}
             </span>
-            {isBn ? ` এর সাথে ` : `, with `}
-            {isBn ? "" : `the beloved daughter of Shri Somnath Basu, `}
+
+            {isBn ? " এর সাথে " : ", with "}
+
+            {isBn
+              ? ""
+              : `the beloved daughter of Shri Somnath Basu, `}
           </p>
 
           <p>
             {isBn
-              ? `শ্রীযুক্ত সোমনাথ বসু মহাশয়ের কন্যা কল্যাণীয়া `
+              ? "শ্রীযুক্ত সোমনাথ বসু মহাশয়ের কন্যা কল্যাণীয়া "
               : `(Daughter of ${settings.bride.fatherEn} & ${settings.bride.motherEn}), `}
+
             <span className="font-bold text-red-900 underline decoration-yellow-400">
-              {isBn ? settings.bride.nameBn : settings.bride.nameEn}
+              {isBn
+                ? settings.bride.nameBn
+                : settings.bride.nameEn}
             </span>
+
             {isBn
-              ? `-র শুভ পরিণয় সুসম্পন্ন হবে। আপনার সবান্ধব উপস্থিতি ও আশীর্বাদ প্রার্থনীয়।`
+              ? "-র শুভ পরিণয় সুসম্পন্ন হবে। আপনার সবান্ধব উপস্থিতি ও আশীর্বাদ প্রার্থনীয়।"
               : `, on Sunday, ${settings.weddingDateBn}, at the auspicious hour. Your gracious presence, along with your family and loved ones, and your heartfelt blessings will make this sacred occasion truly memorable.`}
           </p>
 
           <p>
             {isBn
-              ? `পত্রদ্বারা নিমন্ত্রণের ত্রুটি মার্জনা করবেন।`
-              : `Kindly forgive any shortcomings in this invitation sent by letter.`}
+              ? "পত্রদ্বারা নিমন্ত্রণের ত্রুটি মার্জনা করবেন।"
+              : "Kindly forgive any shortcomings in this invitation sent by letter."}
           </p>
 
           <p className="font-bold text-red-900 text-end pt-2">
@@ -265,33 +340,49 @@ ${window.location.href}`;
             {isBn ? "শ্রীমতী মৌসুমী দে" : "Smt. Mousumi De"}
           </p>
         </div>
-        ```
-        {/* Venue & Date Summary Box */}
+
+        {/* Venue and date */}
         <div className="my-4 sm:my-5 p-3.5 rounded-2xl bg-red-50 border-2 border-yellow-400 text-center font-serif">
           <div className="text-[10px] sm:text-xs uppercase font-bold text-red-800 tracking-wider mb-0.5">
-            {isBn ? "॥ বিবাহ বাসর ও শুভ লগ্ন ॥" : "॥ Venue & Sacred Muhurat ॥"}
+            {isBn
+              ? "॥ বিবাহ বাসর ও শুভ লগ্ন ॥"
+              : "॥ Venue & Sacred Muhurat ॥"}
           </div>
+
           <div className="text-sm sm:text-base font-bold text-red-950">
-            {isBn ? settings.venueNameBn : settings.venueNameEn}
+            {isBn
+              ? settings.venueNameBn
+              : settings.venueNameEn}
           </div>
+
           <div className="text-[11px] sm:text-xs text-stone-700 mt-0.5">
-            {isBn ? settings.venueAddressBn : settings.venueAddressEn}
+            {isBn
+              ? settings.venueAddressBn
+              : settings.venueAddressEn}
           </div>
+
           <div className="text-xs font-semibold text-red-900 mt-1">
-            {isBn ? settings.weddingDateBn : settings.weddingDateEn}
+            {isBn
+              ? settings.weddingDateBn
+              : settings.weddingDateEn}
           </div>
         </div>
-        {/* Signatures of Elders */}
+
+        {/* Family signatures */}
         <div className="mt-6 pt-3 border-t border-yellow-300 grid grid-cols-1 sm:grid-cols-2 gap-4 text-center font-serif text-xs">
           <div>
             <span className="font-bold text-red-900 block text-xs sm:text-sm">
-              {isBn ? "বিনীত বরের পরিবার:" : "Groom's Family:"}
+              {isBn
+                ? "বিনীত বরের পরিবার:"
+                : "Groom's Family:"}
             </span>
+
             <span className="block mt-1 text-stone-800">
               {isBn
                 ? `${settings.groom.fatherBn} ও ${settings.groom.motherBn}`
                 : `${settings.groom.fatherEn} & ${settings.groom.motherEn}`}
             </span>
+
             <span className="block text-stone-500 italic text-[10px] mt-0.5">
               {isBn
                 ? "এবং রায় পরিবারের সর্বজন"
@@ -301,13 +392,17 @@ ${window.location.href}`;
 
           <div>
             <span className="font-bold text-red-900 block text-xs sm:text-sm">
-              {isBn ? "বিনীত কনের পরিবার:" : "Bride's Family:"}
+              {isBn
+                ? "বিনীত কনের পরিবার:"
+                : "Bride's Family:"}
             </span>
+
             <span className="block mt-1 text-stone-800">
               {isBn
                 ? `${settings.bride.fatherBn} ও ${settings.bride.motherBn}`
                 : `${settings.bride.fatherEn} & ${settings.bride.motherEn}`}
             </span>
+
             <span className="block text-stone-500 italic text-[10px] mt-0.5">
               {isBn
                 ? "এবং মুখার্জী পরিবারের সর্বজন"
@@ -317,10 +412,9 @@ ${window.location.href}`;
         </div>
       </div>
 
-      {/* Actions Container (Excluded from PDF) */}
+      {/* Action buttons — excluded from PDF */}
       <div className="mt-6 p-4 rounded-2xl bg-red-50 border border-yellow-400 shadow-sm print:hidden">
         <div className="flex flex-wrap items-center justify-center gap-2.5">
-          {/* Download PDF Button */}
           <button
             onClick={handleDownloadPdf}
             disabled={isGeneratingPdf}
@@ -334,70 +428,57 @@ ${window.location.href}`;
               <>
                 <Loader2 className="w-4 h-4 text-yellow-400 animate-spin" />
                 <span>
-                  {isBn ? "পিডিএফ তৈরি হচ্ছে..." : "Generating PDF..."}
+                  {isBn
+                    ? "পিডিএফ তৈরি হচ্ছে..."
+                    : "Generating PDF..."}
                 </span>
               </>
             ) : pdfSuccess ? (
               <>
                 <Check className="w-4 h-4 text-red-950" />
                 <span>
-                  {isBn ? "পিডিএফ ডাউনলোড সম্পন্ন! ✓" : "PDF Downloaded! ✓"}
+                  {isBn
+                    ? "পিডিএফ ডাউনলোড সম্পন্ন! ✓"
+                    : "PDF Downloaded! ✓"}
                 </span>
               </>
             ) : (
               <>
                 <Download className="w-4 h-4 text-yellow-400" />
                 <span>
-                  {isBn ? "পিডিএফ ডাউনলোড করুন" : "Download PDF Invitation"}
+                  {isBn
+                    ? "পিডিএফ ডাউনলোড করুন"
+                    : "Download PDF Invitation"}
                 </span>
               </>
             )}
           </button>
 
-          {/* Share on WhatsApp */}
           <button
             onClick={handleShareWhatsApp}
             className="px-4 py-2.5 rounded-full bg-white hover:bg-red-100 text-red-900 border border-yellow-400 text-xs sm:text-sm font-serif font-bold shadow flex items-center gap-1.5 active:scale-95 transition-all"
           >
             <Share2 className="w-3.5 h-3.5 text-red-800" />
-            <span>{isBn ? "হোয়াটসঅ্যাপে পাঠান" : "Share on WhatsApp"}</span>
+            <span>
+              {isBn
+                ? "হোয়াটসঅ্যাপে পাঠান"
+                : "Share on WhatsApp"}
+            </span>
           </button>
-
-          {/* Print Button */}
-          {/* <button
-            onClick={handlePrint}
-            className="px-4 py-2.5 rounded-full bg-yellow-400 hover:bg-yellow-300 text-red-950 text-xs sm:text-sm font-serif font-bold border border-yellow-500 shadow flex items-center gap-1.5 active:scale-95 transition-all"
-          >
-            <Printer className="w-3.5 h-3.5 text-red-950" />
-            <span>{isBn ? 'প্রিন্ট' : 'Print'}</span>
-          </button> */}
-
-          {/* Copy Link */}
-          {/* <button
-            onClick={handleCopyLink}
-            className="px-4 py-2.5 rounded-full bg-white hover:bg-red-100 text-red-950 border border-yellow-400 text-xs sm:text-sm font-serif font-bold shadow flex items-center gap-1.5 active:scale-95 transition-all"
-          >
-            {copiedShare ? (
-              <>
-                <Check className="w-3.5 h-3.5 text-red-700" />
-                <span className="text-red-900">{isBn ? 'লিঙ্ক কপি হয়েছে!' : 'Link Copied!'}</span>
-              </>
-            ) : (
-              <span>{isBn ? 'লিঙ্ক কপি' : 'Copy Link'}</span>
-            )}
-          </button> */}
         </div>
       </div>
 
       <MandapDivider className="my-4 print:hidden" />
 
-      {/* Navigation Footers */}
+      {/* Navigation */}
       <div className="flex flex-col sm:flex-row items-center justify-between gap-2.5 mt-3 print:hidden">
         <button
           onClick={onGoToIndex}
           className="w-full sm:w-auto px-4 py-2.5 rounded-full bg-red-50 hover:bg-red-100 text-red-900 text-xs sm:text-sm font-serif font-bold border border-yellow-400"
         >
-          {isBn ? "‹ সূচিপত্রে ফিরুন" : "‹ Back to Chapters"}
+          {isBn
+            ? "‹ সূচিপত্রে ফিরুন"
+            : "‹ Back to Chapters"}
         </button>
 
         <button
@@ -405,7 +486,11 @@ ${window.location.href}`;
           className="w-full sm:w-auto px-5 py-2.5 rounded-full bg-red-800 hover:bg-red-700 text-yellow-300 text-xs sm:text-sm font-serif font-bold border-2 border-yellow-400 shadow flex items-center justify-center gap-1.5 group"
         >
           <RotateCcw className="w-3.5 h-3.5 text-yellow-400 group-hover:-rotate-90 transition-transform" />
-          <span>{isBn ? "খামে ফিরে যান" : "Back to Animated Envelope"}</span>
+          <span>
+            {isBn
+              ? "খামে ফিরে যান"
+              : "Back to Animated Envelope"}
+          </span>
         </button>
       </div>
     </div>

@@ -74,7 +74,7 @@ export const Page3ChapterIndex: React.FC<Page3Props> = ({
       titleEn: "Confirm Attendance (RSVP)",
       subtitleBn: "আপনার উপস্থিতি ও আশীর্বাদ আমাদের কাম্য",
       subtitleEn: "Your gracious presence and blessings mean the world to us",
-      bgClass: "bg-gradient-to-r from-red-900 via-red-800 to-red-950",
+      bgClass: "bg-gradient-to-r from-red-800 via-red-700 to-red-900",
       borderClass: "border-yellow-400 hover:border-yellow-300",
       icon: MailCheck,
       circleBg: "bg-red-950 text-yellow-400 border border-yellow-400",

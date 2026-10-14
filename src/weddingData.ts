@@ -9,7 +9,7 @@ import {
 export const initialWeddingSettings: WeddingSettings = {
   groom: {
     nameBn: "অর্ঘ্য",
-    nameEn: "Argha De",
+    nameEn: "Argha",
     // subTitleBn: 'বি.টেক (কম্পিউটার সায়েন্স), সফটওয়্যার আর্কিটেক্ট',
     // subTitleEn: 'B.Tech (CSE), Software Architect',
     fatherBn: "শ্রী রঘুনাথ দে",
@@ -29,7 +29,7 @@ export const initialWeddingSettings: WeddingSettings = {
   },
   bride: {
     nameBn: "অর্পিতা",
-    nameEn: "Arpita Basu",
+    nameEn: "Arpita",
     // subTitleBn: 'এম.এ. (ইংরেজি সাহিত্য), সহকারি অধ্যাপিকা',
     // subTitleEn: 'M.A. (English Literature), Assistant Professor',
     fatherBn: "শ্রী সোমনাথ বসু",
