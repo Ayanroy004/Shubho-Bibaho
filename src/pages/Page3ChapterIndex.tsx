@@ -24,19 +24,19 @@ export const Page3ChapterIndex: React.FC<Page3Props> = ({
 
   // The chapter cards styled strictly in RED, WHITE, and YELLOW
   const chapterCards = [
+    // {
+    //   page: 4,
+    //   titleBn: "আমাদের গল্প ও পরিবার পর্ব",
+    //   titleEn: "Our Story & Family Journey",
+    //   subtitleBn: "আমাদের পথচলা ও দুই পরিবারের পরিচয়",
+    //   subtitleEn: "Our journey of love and lineage of both families",
+    //   bgClass: "bg-gradient-to-r from-red-900 via-red-800 to-red-950",
+    //   borderClass: "border-yellow-400 hover:border-yellow-300",
+    //   icon: BookOpen,
+    //   circleBg: "bg-red-950 text-yellow-400 border border-yellow-400",
+    // },
     {
       page: 4,
-      titleBn: "আমাদের গল্প ও পরিবার পর্ব",
-      titleEn: "Our Story & Family Journey",
-      subtitleBn: "আমাদের পথচলা ও দুই পরিবারের পরিচয়",
-      subtitleEn: "Our journey of love and lineage of both families",
-      bgClass: "bg-gradient-to-r from-red-900 via-red-800 to-red-950",
-      borderClass: "border-yellow-400 hover:border-yellow-300",
-      icon: BookOpen,
-      circleBg: "bg-red-950 text-yellow-400 border border-yellow-400",
-    },
-    {
-      page: 5,
       titleBn: "স্মারক লিপি (অনুষ্ঠান সূচী)",
       titleEn: "Ceremony Itinerary & Timeline",
       subtitleBn: "আইবুড়ো ভাত, গায়ে হলুদ ও শুভ পরিণয়",
@@ -58,18 +58,18 @@ export const Page3ChapterIndex: React.FC<Page3Props> = ({
     //   circleBg: 'bg-red-950 text-yellow-400 border border-yellow-400',
     // },
     {
-      page: 6,
+      page: 5,
       titleBn: "বিবাহ বাসর ও অবস্থান",
       titleEn: "Wedding Venue & Live Map",
-      subtitleBn: "‘রায় বাড়ি’ ও সরাসরি লাইভ রুট ম্যাপ",
-      subtitleEn: "'Roy Bari' and direct interactive route directions",
+      subtitleBn: "‘বসু বাড়ি’ ও সরাসরি লাইভ রুট ম্যাপ",
+      subtitleEn: "'Basu Bari' and direct interactive route directions",
       bgClass: "bg-gradient-to-r from-red-800 via-red-700 to-red-900",
       borderClass: "border-yellow-400 hover:border-yellow-300",
       icon: MapPin,
       circleBg: "bg-red-950 text-yellow-400 border border-yellow-400",
     },
     {
-      page: 7,
+      page: 6,
       titleBn: "উপস্থিতি নিশ্চিত করুন (RSVP)",
       titleEn: "Confirm Attendance (RSVP)",
       subtitleBn: "আপনার উপস্থিতি ও আশীর্বাদ আমাদের কাম্য",
@@ -80,7 +80,7 @@ export const Page3ChapterIndex: React.FC<Page3Props> = ({
       circleBg: "bg-red-950 text-yellow-400 border border-yellow-400",
     },
     {
-      page: 8,
+      page: 7,
       titleBn: "ঐতিহ্যবাহী নিমন্ত্রণ লিপি",
       titleEn: "Traditional Invitation Letter",
       subtitleBn: "সবিনয় নিবেদন ও আশীর্বাদের সনাতনী চিঠি",
@@ -91,7 +91,7 @@ export const Page3ChapterIndex: React.FC<Page3Props> = ({
       circleBg: "bg-red-950 text-yellow-400 border border-yellow-400",
     },
     {
-      page: 9,
+      page: 8,
       titleBn: "সৌজন্যে ও প্রযুক্তিগত সহযোগিতায়",
       titleEn: "Powered By & Credits",
       subtitleBn: "বিশেষ কৃতজ্ঞতা প্রকাশ ও কারিগরি সহযোগিতায়",

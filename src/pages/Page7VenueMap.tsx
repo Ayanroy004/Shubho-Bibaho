@@ -40,8 +40,8 @@ export const Page7VenueMap: React.FC<Page7Props> = ({
 
             <span className="min-w-0 text-[9px] font-serif font-bold uppercase tracking-wide text-red-800 sm:text-xs sm:tracking-widest">
               {isBn
-                ? "॥ অধ্যায় ৩: শুভ বিবাহের আসর ॥"
-                : "॥ Chapter 3: Venue & Directions ॥"}
+                ? "॥ অধ্যায় ২: শুভ বিবাহের আসর ॥"
+                : "॥ Chapter 2: Venue & Directions ॥"}
             </span>
 
             <KolkaOrnament className="h-5 w-5 shrink-0 -scale-x-100 text-yellow-500 sm:h-6 sm:w-6" />

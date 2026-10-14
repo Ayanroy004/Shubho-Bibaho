@@ -33,7 +33,7 @@ const PAGE_ROUTES = [
   "/wedding",
   "/couple",
   "/chapters",
-  "/story",
+  // "/story",
   "/ceremonies",
   // "/gallery",
   "/venue",

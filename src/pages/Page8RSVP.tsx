@@ -160,14 +160,6 @@ export const Page8RSVP: React.FC<Page8Props> = ({
 
   const confirmSubmission = async () => {
     if (!pendingSubmission || isSubmitting) return;
-
-    console.log("Confirm button clicked");
-    console.log("Pending RSVP:", pendingSubmission);
-    console.log("Google Sheets URL:", settings.googleSheetsWebhookUrl);
-    console.log(
-      "Webhook from env:",  
-      import.meta.env.VITE_GOOGLE_SHEETS_WEBHOOK_URL,
-    );
     setIsSubmitting(true);
     setSubmissionFeedback(null);
 
@@ -295,8 +287,8 @@ export const Page8RSVP: React.FC<Page8Props> = ({
 
             <span className="min-w-0 text-[9px] font-serif font-bold uppercase tracking-wide text-red-800 sm:text-xs sm:tracking-widest">
               {isBn
-                ? "॥ অধ্যায় ৪: উপস্থিতি নিশ্চিতকরণ ॥"
-                : "॥ Chapter 4: Confirm Attendance ॥"}
+                ? "॥ অধ্যায় ৩: উপস্থিতি নিশ্চিতকরণ ॥"
+                : "॥ Chapter 3: Confirm Attendance ॥"}
             </span>
 
             <KolkaOrnament className="h-5 w-5 shrink-0 -scale-x-100 text-yellow-500 sm:h-6 sm:w-6" />

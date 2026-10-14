@@ -26,13 +26,13 @@ export const PageSelectModal: React.FC<PageSelectModalProps> = ({
     { num: 1, titleBn: '১. শুভ বিবাহ ও দিনক্ষণ', titleEn: '1. Wedding Date & Countdown', icon: Calendar },
     { num: 2, titleBn: '২. বর ও কনে এবং উভয় পরিবার', titleEn: "2. Bride & Groom's Family", icon: Users },
     { num: 3, titleBn: '৩. আমন্ত্রণের অধ্যায়সমূহ (সূচিপত্র)', titleEn: '3. All Chapters (Main Index)', icon: Layers },
-    { num: 4, titleBn: '৪. আমাদের গল্প ও পরিবার পর্ব', titleEn: '4. Our Story & Family Journey', icon: BookOpen },
-    { num: 5, titleBn: '৫. স্মারক লিপি (অনুষ্ঠান সূচী)', titleEn: '5. Ceremony Timeline', icon: Clock },
+    // { num: 4, titleBn: '৪. আমাদের গল্প ও পরিবার পর্ব', titleEn: '4. Our Story & Family Journey', icon: BookOpen },
+    { num: 4, titleBn: '৪. স্মারক লিপি (অনুষ্ঠান সূচী)', titleEn: '4. Ceremony Timeline', icon: Clock },
     // { num: 6, titleBn: '৬. আমাদের কিছু মুহূর্ত (ফটো গ্যালারি)', titleEn: '6. Cherished Moments (Gallery)', icon: Camera },
-    { num: 6, titleBn: '৬. বিবাহ বাসর ও অবস্থান', titleEn: '6. Venue & Live Route Map', icon: MapPin },
-    { num: 7, titleBn: '৭. উপস্থিতি নিশ্চিত করুন (RSVP)', titleEn: '7. Confirm Attendance (RSVP)', icon: MailCheck },
-    { num: 8, titleBn: '৮. ঐতিহ্যবাহী নিমন্ত্রণ লিপি', titleEn: '8. Traditional Formal Letter', icon: Scroll },
-    { num: 9, titleBn: '৯. সৌজন্যে ও প্রযুক্তিগত সহযোগিতায়', titleEn: '9. Powered By & Credits', icon: Mail },
+    { num: 5, titleBn: '৫. বিবাহ বাসর ও অবস্থান', titleEn: '5. Venue & Live Route Map', icon: MapPin },
+    { num: 6, titleBn: '৬. উপস্থিতি নিশ্চিত করুন (RSVP)', titleEn: '6. Confirm Attendance (RSVP)', icon: MailCheck },
+    { num: 7, titleBn: '৭. ঐতিহ্যবাহী নিমন্ত্রণ লিপি', titleEn: '7. Traditional Formal Letter', icon: Scroll },
+    { num: 8, titleBn: '৮. সৌজন্যে ও প্রযুক্তিগত সহযোগিতায়', titleEn: '8. Powered By & Credits', icon: Mail },
   ];
 
   return (

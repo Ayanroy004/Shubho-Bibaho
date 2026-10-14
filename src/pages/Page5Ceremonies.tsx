@@ -72,8 +72,8 @@ export const Page5Ceremonies: React.FC<Page5Props> = ({
 
             <span className="min-w-0 break-words text-[9px] font-serif font-bold uppercase leading-relaxed tracking-wide text-red-800 min-[375px]:text-[10px] min-[420px]:tracking-widest sm:text-xs">
               {isBn
-                ? "॥ অধ্যায় ২: মাঙ্গলিক অনুষ্ঠান ॥"
-                : "॥ Chapter 2: Auspicious Ceremonies ॥"}
+                ? "॥ অধ্যায় ১: মাঙ্গলিক অনুষ্ঠান ॥"
+                : "॥ Chapter 1: Auspicious Ceremonies ॥"}
             </span>
 
             <KolkaOrnament className="h-5 w-5 shrink-0 -scale-x-100 text-yellow-500 sm:h-6 sm:w-6" />

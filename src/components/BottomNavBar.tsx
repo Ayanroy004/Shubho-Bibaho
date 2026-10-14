@@ -33,13 +33,13 @@ export const BottomNavBar: React.FC<BottomNavBarProps> = ({
     { num: 1, titleBn: '১. শুভ বিবাহ ও শুভ দিনক্ষণ', titleEn: '1. Wedding Date & Countdown' },
     { num: 2, titleBn: '২. বর ও কনে এবং পরিবার', titleEn: "2. Bride & Groom's Family" },
     { num: 3, titleBn: '৩. আমন্ত্রণের অধ্যায়সমূহ', titleEn: '3. Chapters & Index' },
-    { num: 4, titleBn: '৪. আমাদের গল্প ও পথচলা', titleEn: '4. Our Story & Journey' },
-    { num: 5, titleBn: '৫. স্মারক লিপি (অনুষ্ঠান সূচী)', titleEn: '5. Ceremony Timeline' },
+    // { num: 4, titleBn: '৪. আমাদের গল্প ও পথচলা', titleEn: '4. Our Story & Journey' },
+    { num: 4, titleBn: '৪. স্মারক লিপি (অনুষ্ঠান সূচী)', titleEn: '4. Ceremony Timeline' },
     // { num: 6, titleBn: '৬. ফটো গ্যালারি (স্মৃতি)', titleEn: '6. Photo Gallery' },
-    { num: 6, titleBn: '৬. বিবাহ বাসর ও অবস্থান', titleEn: '6. Venue & Live Map' },
-    { num: 7, titleBn: '৭. উপস্থিতি নিশ্চিত (RSVP)', titleEn: '7. Guest RSVP & Guestbook' },
-    { num: 8, titleBn: '৮. ঐতিহ্যবাহী নিমন্ত্রণ লিপি', titleEn: '8. Traditional Letter' },
-    { num: 9, titleBn: '৯. সৌজন্যে ও প্রযুক্তিগত সহযোগিতায়', titleEn: '9. Powered By & Credits'},
+    { num: 5, titleBn: '৫. বিবাহ বাসর ও অবস্থান', titleEn: '5. Venue & Live Map' },
+    { num: 6, titleBn: '৬. উপস্থিতি নিশ্চিত (RSVP)', titleEn: '6. Guest RSVP & Guestbook' },
+    { num: 7, titleBn: '৭. ঐতিহ্যবাহী নিমন্ত্রণ লিপি', titleEn: '7. Traditional Letter' },
+    { num: 8, titleBn: '৮. সৌজন্যে ও প্রযুক্তিগত সহযোগিতায়', titleEn: '8. Powered By & Credits'},
   ];
 
   // Close dropdown on outside click

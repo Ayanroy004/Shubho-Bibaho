@@ -26,7 +26,7 @@ export const initialWeddingSettings: WeddingSettings = {
     bioEn:
       "Cultured, gentle, and passionate about technology, Indian classical music, and family values.",
     photoUrl:
-      "https://images.unsplash.com/photo-1583939003579-730e3918a45a?auto=format&fit=crop&w=700&q=80",
+      "../Public/Image/boy.jpg",
   },
   bride: {
     nameBn: "অর্পিতা",
@@ -47,7 +47,7 @@ export const initialWeddingSettings: WeddingSettings = {
     bioEn:
       "Cheerful, bibliophile, lover of Rabindra Sangeet, literature, and timeless Bengali traditions.",
     photoUrl:
-      "https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&w=700&q=80",
+      "../Public/Image/girl.png",
   },
   weddingDate: "2026-12-13T19:30:00",
   weddingDateBn: "২৬শে অগ্রহায়ণ, ১৪৩৩ বঙ্গাব্দ (১৩ই ডিসেম্বর, ২০২৬)",
@@ -57,7 +57,7 @@ export const initialWeddingSettings: WeddingSettings = {
   venueAddressBn: "মাতিশ্বর বসুপাড়া পূর্ব বর্ধমান",
   venueAddressEn: "Matishwar Basupara East Burdwan",
   venueMapsUrl: "https://maps.app.goo.gl/pNfPZdbKAZdeDfx66",
-  googleSheetsWebhookUrl: import.meta.env.VITE_GOOGLE_SHEETS_WEBHOOK_URL,
+  googleSheetsWebhookUrl: import.meta.env.VITE_GOOGLE_SHEETS_URL,
   contactPhones: [
     {
       // labelBn: "বরের পরিবার (শ্রী সুভাষ রায়)",
