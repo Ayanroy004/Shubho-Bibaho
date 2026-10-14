@@ -129,7 +129,7 @@ export const Page10Company: React.FC<Page10Props> = ({
 
           <div className="mx-auto mb-3 flex h-16 w-16 items-center justify-center overflow-hidden rounded-full border-2 border-yellow-400 bg-red-800 shadow-md sm:h-20 sm:w-20">
             <img
-              src="../../public/image/logo.png"
+              src="/image/logo.png"
               alt="Saatpak Films Logo"
               className="h-full w-full object-contain p-1"
             />
