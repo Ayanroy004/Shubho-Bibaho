@@ -229,7 +229,7 @@ function WeddingApp() {
                 settings={settings}
                 language={language}
                 onNextPage={() => handlePageChange(2)}
-                onGoToRSVP={() => handlePageChange(7)}
+                onGoToRSVP={() => handlePageChange(6)}
               />
             }
           />
