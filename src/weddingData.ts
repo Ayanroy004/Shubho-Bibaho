@@ -25,8 +25,7 @@ export const initialWeddingSettings: WeddingSettings = {
     bioBn: "শান্ত, সংস্কৃতিমনা ও স্বপ্নবান। পরিবার ও সঙ্গীতকে ভালোবাসেন।",
     bioEn:
       "Cultured, gentle, and passionate about technology, Indian classical music, and family values.",
-    photoUrl:
-      "../Public/Image/boy.jpg",
+    photoUrl: "../Public/image/boy.jpg",
   },
   bride: {
     nameBn: "অর্পিতা",
@@ -46,8 +45,7 @@ export const initialWeddingSettings: WeddingSettings = {
     bioBn: "হাসিখুশি, সাহিত্যপ্রেমী এবং রবীন্দ্রসঙ্গীতের অনুরক্ত সাধক।",
     bioEn:
       "Cheerful, bibliophile, lover of Rabindra Sangeet, literature, and timeless Bengali traditions.",
-    photoUrl:
-      "../Public/Image/girl.png",
+    photoUrl: "../Public/image/girl.png",
   },
   weddingDate: "2026-12-13T19:30:00",
   weddingDateBn: "২৬শে অগ্রহায়ণ, ১৪৩৩ বঙ্গাব্দ (১৩ই ডিসেম্বর, ২০২৬)",

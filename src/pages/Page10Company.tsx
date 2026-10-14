@@ -1,4 +1,3 @@
-
 import React from "react";
 import {
   Instagram,
@@ -34,8 +33,7 @@ interface Page10Props {
 const COMPANY_NAME = "SAATPAK FILMS";
 const OWNER_NAME = "Amiya Ghosh";
 
-const INSTAGRAM_URL =
-  "https://www.instagram.com/saatpak_films/";
+const INSTAGRAM_URL = "https://www.instagram.com/saatpak_films/";
 
 const COMPANY_PHONE = "+91 97490 45287";
 const COMPANY_EMAIL = "saatpakfilms2026@gmail.com";
@@ -131,7 +129,7 @@ export const Page10Company: React.FC<Page10Props> = ({
 
           <div className="mx-auto mb-3 flex h-16 w-16 items-center justify-center overflow-hidden rounded-full border-2 border-yellow-400 bg-red-800 shadow-md sm:h-20 sm:w-20">
             <img
-              src="../../Public/Image/logo.png"
+              src="../../Public/image/logo.png"
               alt="Saatpak Films Logo"
               className="h-full w-full object-contain p-1"
             />
@@ -326,9 +324,7 @@ export const Page10Company: React.FC<Page10Props> = ({
                 </p>
 
                 <p className="break-words text-sm font-bold text-red-900">
-                  {isBn
-                    ? "খানাকুল, হুগলি, ৭১২৪০৬"
-                    : COMPANY_ADDRESS}
+                  {isBn ? "খানাকুল, হুগলি, ৭১২৪০৬" : COMPANY_ADDRESS}
                 </p>
               </div>
             </div>
