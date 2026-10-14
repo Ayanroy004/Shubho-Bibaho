@@ -129,7 +129,7 @@ export const EnvelopeOpening: React.FC<EnvelopeOpeningProps> = ({
       <div className="pointer-events-none absolute -bottom-24 -right-20 h-80 w-80 rounded-full bg-red-500/20 blur-3xl" />
       <div className="pointer-events-none absolute left-1/2 top-1/2 h-96 w-96 -translate-x-1/2 -translate-y-1/2 rounded-full border border-yellow-400/10" />
       <div className="pointer-events-none absolute left-1/2 top-1/2 h-[28rem] w-[28rem] -translate-x-1/2 -translate-y-1/2 rounded-full border border-yellow-400/5" />
-    
+
       {/* Continuously Floating Wedding Flowers */}
       <div className="pointer-events-none absolute inset-0 z-0 overflow-hidden">
         {/* Left upper flower */}
@@ -150,7 +150,7 @@ export const EnvelopeOpening: React.FC<EnvelopeOpeningProps> = ({
             animationDelay: "1s",
           }}
         >
-          🌺
+          🌹
         </div>
 
         {/* Left middle flower */}
@@ -183,7 +183,7 @@ export const EnvelopeOpening: React.FC<EnvelopeOpeningProps> = ({
             animationDelay: "2s",
           }}
         >
-          🌺
+          🌹
         </div>
 
         {/* Right bottom flower */}
@@ -197,7 +197,7 @@ export const EnvelopeOpening: React.FC<EnvelopeOpeningProps> = ({
           🌼
         </div>
       </div>
-     
+
       {/* Header */}
       <div className="relative z-10 mb-7 max-w-md px-2 text-center sm:mb-10">
         <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-yellow-400/70 bg-red-950/70 px-4 py-2 font-serif text-[10px] tracking-widest text-yellow-300 shadow-[0_0_25px_rgba(250,204,21,0.12)] sm:text-xs">
