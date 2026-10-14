@@ -5,8 +5,8 @@ class WeddingAudioPlayer {
 
   private getSongPath(language: "bn" | "en"): string {
     return language === "bn"
-      ? "../../Public/song/wedding-song.mp3"
-      : "../../Public/song/hindi-version-vaaroon.mp3";
+      ? "../../public/song/wedding-song.mp3"
+      : "../../public/song/hindi-version-vaaroon.mp3";
   }
 
   public init(language: "bn" | "en" = this.currentLanguage) {
