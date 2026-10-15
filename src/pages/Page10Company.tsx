@@ -185,8 +185,8 @@ export const Page10Company: React.FC<Page10Props> = ({
           <div className="mt-4 rounded-xl border border-yellow-300 bg-white p-3 text-center">
             <p className="font-serif text-sm font-bold leading-relaxed text-red-900 sm:text-base">
               {isBn
-                ? "সাতপাকের বন্ধন, সারাজীবনের পথচলা।"
-                : "The bond of the seven paks, throughout life."}
+                ? "“সাত পাকের বন্ধন হোক আজীবন”"
+                : "Bound by the seven sacred steps, united for a lifetime."}
             </p>
           </div>
         </section>
