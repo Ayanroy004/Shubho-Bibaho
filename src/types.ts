@@ -63,7 +63,7 @@ export interface RSVPSubmission {
   attending: 'attending' | 'not_attending' | 'tentative';
   guestCount: number;
   ceremonies: string[];
-  mealPreference: 'traditional_nonveg' | 'pure_veg' | 'jain_veg';
+  mealPreference: 'traditional_nonveg' | 'pure_veg' ;
   blessingMessage: string;
   createdAt: string;
   syncedToGoogleSheet: boolean;
@@ -75,6 +75,13 @@ export interface WeddingSettings {
   weddingDate: string; // ISO date string e.g. "2026-12-11T20:25:00"
   weddingDateBn: string;
   weddingDateEn: string;
+  receptionDate: string; // ISO date string e.g. "2026-12-11T20:25:00"
+  receptionDateBn: string;
+  receptionDateEn: string;
+  receptionVenueNameBn: string;
+  receptionVenueNameEn: string;
+  receptionVenueAddressBn: string;
+  receptionVenueAddressEn: string;
   venueNameBn: string;
   venueNameEn: string;
   venueAddressBn: string;

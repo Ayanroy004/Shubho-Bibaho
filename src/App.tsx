@@ -32,12 +32,12 @@ import { Page10Company } from "./pages/Page10Company";
 const PAGE_ROUTES = [
   "/wedding",
   "/couple",
-  "/chapters",
+  // "/chapters",
   // "/story",
   "/ceremonies",
   // "/gallery",
   "/venue",
-  "/rsvp",
+  // "/rsvp",
   "/letter",
   "/company-details",
 ] as const;
@@ -52,7 +52,7 @@ function WeddingApp() {
     location.pathname === "/",
   );
 
-  const [language, setLanguage] = useState<Language>("bn");
+  const [language, setLanguage] = useState<Language>("en");
   const [isMusicPlaying, setIsMusicPlaying] = useState(false);
   const [isPageModalOpen, setIsPageModalOpen] = useState(false);
 
@@ -247,7 +247,7 @@ function WeddingApp() {
           />
 
           {/* Page 3: Chapter index */}
-          <Route
+          {/* <Route
             path="/chapters"
             element={
               <Page3ChapterIndex
@@ -255,10 +255,10 @@ function WeddingApp() {
                 onNavigatePage={handlePageChange}
               />
             }
-          />
+          /> */}
 
           {/* Page 4: Our story */}
-          <Route
+          {/* <Route
             path="/story"
             element={
               <Page4Story
@@ -268,7 +268,7 @@ function WeddingApp() {
                 onGoToIndex={() => handlePageChange(3)}
               />
             }
-          />
+          /> */}
 
           {/* Page 5: Wedding ceremonies */}
           <Route
@@ -276,7 +276,7 @@ function WeddingApp() {
             element={
               <Page5Ceremonies
                 language={language}
-                onNextPage={() => handlePageChange(6)}
+                onNextPage={() => handlePageChange(4)}
                 onGoToIndex={() => handlePageChange(3)}
               />
             }
@@ -301,14 +301,14 @@ function WeddingApp() {
               <Page7VenueMap
                 settings={settings}
                 language={language}
-                onNextPage={() => handlePageChange(8)}
-                onGoToIndex={() => handlePageChange(3)}
+                onNextPage={() => handlePageChange(5)}
+                onGoToIndex={() => handlePageChange(4)}
               />
             }
           />
 
           {/* Page 8: RSVP and guestbook */}
-          <Route
+          {/* <Route
             path="/rsvp"
             element={
               <Page8RSVP
@@ -320,7 +320,7 @@ function WeddingApp() {
                 onGoToIndex={() => handlePageChange(3)}
               />
             }
-          />
+          /> */}
 
           {/* Page 9: Traditional invitation letter */}
           <Route

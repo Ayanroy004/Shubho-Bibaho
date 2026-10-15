@@ -22,7 +22,7 @@ export const BottomNavBar: React.FC<BottomNavBarProps> = ({
   // Bengali numerals converter
   const toBnNum = (n: number) => {
     if (!isBn) return String(n);
-    const bnDigits = ['০', '১', '২', '৩', '৪', '৫', '৬', '৭', '৮', '৯'];
+    const bnDigits = ['০', '১', '২', '৩', '৪', '৫', '৬'];
     return String(n)
       .split('')
       .map(d => bnDigits[parseInt(d, 10)] || d)
@@ -32,14 +32,14 @@ export const BottomNavBar: React.FC<BottomNavBarProps> = ({
   const pageNames = [
     { num: 1, titleBn: '১. শুভ বিবাহ ও শুভ দিনক্ষণ', titleEn: '1. Wedding Date & Countdown' },
     { num: 2, titleBn: '২. বর ও কনে এবং পরিবার', titleEn: "2. Bride & Groom's Family" },
-    { num: 3, titleBn: '৩. আমন্ত্রণের অধ্যায়সমূহ', titleEn: '3. Chapters & Index' },
+    // { num: 3, titleBn: '৩. আমন্ত্রণের অধ্যায়সমূহ', titleEn: '3. Chapters & Index' },
     // { num: 4, titleBn: '৪. আমাদের গল্প ও পথচলা', titleEn: '4. Our Story & Journey' },
-    { num: 4, titleBn: '৪. স্মারক লিপি (অনুষ্ঠান সূচী)', titleEn: '4. Ceremony Timeline' },
+    { num: 3, titleBn: '৩. স্মারক লিপি (অনুষ্ঠান সূচী)', titleEn: '3. Ceremony Timeline' },
     // { num: 6, titleBn: '৬. ফটো গ্যালারি (স্মৃতি)', titleEn: '6. Photo Gallery' },
-    { num: 5, titleBn: '৫. বিবাহ বাসর ও অবস্থান', titleEn: '5. Venue & Live Map' },
-    { num: 6, titleBn: '৬. উপস্থিতি নিশ্চিত (RSVP)', titleEn: '6. Guest RSVP & Guestbook' },
-    { num: 7, titleBn: '৭. ঐতিহ্যবাহী নিমন্ত্রণ লিপি', titleEn: '7. Traditional Letter' },
-    { num: 8, titleBn: '৮. সৌজন্যে ও প্রযুক্তিগত সহযোগিতায়', titleEn: '8. Powered By & Credits'},
+    { num: 4, titleBn: '৪. বিবাহ বাসর ও অবস্থান', titleEn: '4. Venue & Live Map' },
+    // { num: 5, titleBn: '৬. উপস্থিতি নিশ্চিত (RSVP)', titleEn: '6. Guest RSVP & Guestbook' },
+    { num: 5, titleBn: '৫. ঐতিহ্যবাহী নিমন্ত্রণ লিপি', titleEn: '5. Traditional Letter' },
+    { num: 6, titleBn: '৬. সৌজন্যে ও প্রযুক্তিগত সহযোগিতায়', titleEn: '6. Powered By & Credits'},
   ];
 
   // Close dropdown on outside click

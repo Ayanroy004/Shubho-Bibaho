@@ -59,7 +59,7 @@ export const Page2BoyGirlDetails: React.FC<Page2Props> = ({
             <div>
               <div className="flex items-center justify-center pb-2.5 border-b border-yellow-400/50 mb-3">
                 <span className="px-2.5 py-1 rounded-full bg-red-800 text-yellow-300 text-[11px] sm:text-xs font-serif font-bold shadow-sm">
-                  {isBn ? "বর পক্ষ (Groom)" : "Groom's Side"}
+                  {isBn ? "টোপোর পরিবার (Groom)" : "Groom's Side"}
                 </span>
                 {/* <span className="text-[11px] sm:text-xs text-red-800 font-serif font-semibold">
                   {isBn ? 'শাণ্ডিল্য গোত্র' : 'Gotra: Sandilya'}
@@ -73,7 +73,7 @@ export const Page2BoyGirlDetails: React.FC<Page2Props> = ({
                     <img
                       src={settings.groom.photoUrl}
                       alt={isBn ? settings.groom.nameBn : settings.groom.nameEn}
-                      className="w-full h-full object-cover rounded-full"
+                      className="w-full h-full object-cover scale-180 object-[center_30%] rounded-full"
                     />
                   </div>
                   <div className="absolute -bottom-1 -right-1 p-1 rounded-full bg-red-800 text-yellow-300 border border-yellow-400 shadow">
@@ -148,7 +148,7 @@ export const Page2BoyGirlDetails: React.FC<Page2Props> = ({
             <div>
               <div className="flex items-center justify-center pb-2.5 border-b border-yellow-400/50 mb-3">
                 <span className="px-2.5 py-1 rounded-full bg-red-800 text-yellow-300 text-[11px] sm:text-xs font-serif font-bold shadow-sm">
-                  {isBn ? "কনে পক্ষ (Bride)" : "Bride's Side"}
+                  {isBn ? "মুকুটের পরিবার (Bride)" : "Bride's Side"}
                 </span>
                 {/* <span className="text-[11px] sm:text-xs text-red-800 font-serif font-semibold">
                   {isBn ? 'কাশ্যপ গোত্র' : 'Gotra: Kashyapa'}
@@ -162,7 +162,7 @@ export const Page2BoyGirlDetails: React.FC<Page2Props> = ({
                     <img
                       src={settings.bride.photoUrl}
                       alt={isBn ? settings.bride.nameBn : settings.bride.nameEn}
-                      className="w-full h-full object-cover rounded-full"
+                      className="w-full h-full object-cover scale-150 object-[center_-5%] rounded-full"
                     />
                   </div>
                   <div className="absolute -bottom-1 -right-1 p-1 rounded-full bg-red-800 text-yellow-300 border border-yellow-400 shadow">
@@ -252,14 +252,14 @@ export const Page2BoyGirlDetails: React.FC<Page2Props> = ({
           <div className="text-xs font-serif font-bold text-red-900 mt-1.5">
             {isBn
               ? "— বিনীত: দে ও বসু পরিবার"
-              : "— With regards: De & Basu Families"}
+              : "— With regards: Dey & Basu Families"}
           </div>
         </div>
 
         <MandapDivider className="my-3 sm:my-4" />
 
         {/* Forward to Chapter Index */}
-        <div className="flex justify-center mt-3 sm:mt-4">
+        {/* <div className="flex justify-center mt-3 sm:mt-4">
           <button
             onClick={onNextPage}
             className="w-full sm:w-auto px-6 py-2.5 sm:py-3 rounded-full bg-red-800 hover:bg-red-700 text-yellow-300 font-serif font-bold text-xs sm:text-sm border-2 border-yellow-400 shadow active:scale-95 transition-all flex items-center justify-center gap-2 group"
@@ -271,7 +271,7 @@ export const Page2BoyGirlDetails: React.FC<Page2Props> = ({
             </span>
             <ArrowRight className="w-4 h-4 text-yellow-400 group-hover:translate-x-1 transition-transform" />
           </button>
-        </div>
+        </div> */}
       </RoyalFrame>
     </div>
   );

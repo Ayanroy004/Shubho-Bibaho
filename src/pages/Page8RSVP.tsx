@@ -29,7 +29,7 @@ interface Page8Props {
 
 type Attendance = "attending" | "not_attending" | "tentative";
 
-type MealPreference = "traditional_nonveg" | "pure_veg" | "jain_veg";
+type MealPreference = "traditional_nonveg" | "pure_veg";
 
 interface FieldErrors {
   guestName?: string;
@@ -119,7 +119,7 @@ export const Page8RSVP: React.FC<Page8Props> = ({
     }
 
     if (
-      !["traditional_nonveg", "pure_veg", "jain_veg"].includes(mealPreference)
+      !["traditional_nonveg", "pure_veg"].includes(mealPreference)
     ) {
       errors.mealPreference = isBn
         ? "খাবারের পছন্দ নির্বাচন করুন।"
@@ -264,7 +264,7 @@ export const Page8RSVP: React.FC<Page8Props> = ({
       return isBn ? "খাঁটি নিরামিষ ভোজ" : "Pure Vegetarian";
     }
 
-    return isBn ? "জৈন নিরামিষ" : "Jain Vegetarian";
+    // return isBn ? "জৈন নিরামিষ" : "Jain Vegetarian";
   };
 
   const ceremonyLabel = (id: string) => {
@@ -459,7 +459,7 @@ export const Page8RSVP: React.FC<Page8Props> = ({
                   : "How many guests will be attending?"}
               </label>
 
-              <div className="flex flex-wrap items-center gap-2">
+              <div className="md:flex md:flex-wrap md:items-center md:gap-2 grid grid-cols-5 gap-2">
                 {[1, 2, 3, 4, 5].map((num) => (
                   <button
                     type="button"
@@ -510,11 +510,7 @@ export const Page8RSVP: React.FC<Page8Props> = ({
                   bn: "খাঁটি নিরামিষ ভোজ",
                   en: "Pure Vegetarian",
                 },
-                {
-                  id: "jain_veg",
-                  bn: "জৈন নিরামিষ",
-                  en: "Jain Vegetarian",
-                },
+                
               ].map((meal) => (
                 <button
                   type="button"

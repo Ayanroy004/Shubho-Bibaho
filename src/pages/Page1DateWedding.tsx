@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import {
   Calendar,
@@ -63,7 +62,6 @@ export const Page1DateWedding: React.FC<Page1Props> = ({
     };
 
     calculateTime();
-
     const interval = window.setInterval(calculateTime, 1000);
 
     return () => window.clearInterval(interval);
@@ -122,8 +120,8 @@ export const Page1DateWedding: React.FC<Page1Props> = ({
             : "॥ Om Sri Prajapataye Namah ॥"}
         </div>
 
-        <h1 className="mt-2 mb-1 break-words font-serif text-3xl font-bold tracking-tight text-red-900 min-[375px]:text-4xl sm:text-5xl">
-          {isBn ? "শুভ পরিণয়" : "Shubho Bibaho"}
+        <h1 className="mt-2 mb-1 md:mt-5 break-words font-serif text-3xl font-bold tracking-tight text-red-900 min-[375px]:text-4xl sm:text-5xl">
+          {isBn ? "শুভ প্রীতিভোজ " : "Grand Wedding Reception"}
         </h1>
 
         <p className="mx-auto max-w-md px-1 text-xs font-serif italic leading-relaxed text-red-950/90 sm:text-sm">
@@ -138,15 +136,13 @@ export const Page1DateWedding: React.FC<Page1Props> = ({
         <div className="min-w-0 py-1">
           <div className="break-words text-[10px] font-serif font-bold uppercase tracking-wider text-red-700 min-[375px]:text-xs sm:text-sm sm:tracking-widest">
             {isBn
-              ? "শুভ বিবাহ বন্ধনে আবদ্ধ হচ্ছেন"
-              : "Cordially Invite You to the Wedding of"}
+              ? "শুভ প্রীতিভোজের অনুষ্ঠানে আপনাকে সাগ্রহ নিমন্ত্রণ"
+              : "Cordially Invite You to the Grand Wedding Reception of"}
           </div>
 
           <div className="my-2.5 flex min-w-0 flex-col items-center justify-center gap-1 sm:my-3 sm:flex-row sm:gap-2.5">
             <h2 className="max-w-full break-words px-1 font-serif text-2xl font-bold tracking-wide text-red-900 min-[375px]:text-3xl sm:px-0 md:text-4xl">
-              {isBn
-                ? settings.groom.nameBn
-                : settings.groom.nameEn}
+              {isBn ? settings.groom.nameBn : settings.groom.nameEn}
             </h2>
 
             <div className="my-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-yellow-400 bg-red-100 text-red-700 shadow-sm sm:my-0">
@@ -154,16 +150,14 @@ export const Page1DateWedding: React.FC<Page1Props> = ({
             </div>
 
             <h2 className="max-w-full break-words px-1 font-serif text-2xl font-bold tracking-wide text-red-900 min-[375px]:text-3xl sm:px-0 md:text-4xl">
-              {isBn
-                ? settings.bride.nameBn
-                : settings.bride.nameEn}
+              {isBn ? settings.bride.nameBn : settings.bride.nameEn}
             </h2>
           </div>
 
           <p className="mx-auto max-w-sm px-2 text-xs font-serif leading-relaxed text-stone-700 sm:px-1 sm:text-sm">
             {isBn
               ? "আমাদের জীবনের এই শ্রেষ্ঠ আনন্দক্ষণে আপনার আন্তরিক উপস্থিতি ও আশীর্বাদ একান্ত প্রার্থনীয়।"
-              : "Your gracious presence and heartfelt blessings will make this day memorable."}
+              : "Your gracious presence and heartfelt blessings will make this grand celebration truly memorable."}
           </p>
         </div>
 
@@ -176,15 +170,11 @@ export const Page1DateWedding: React.FC<Page1Props> = ({
 
             <div className="min-w-0 flex-1">
               <span className="block break-words text-[10px] font-bold uppercase tracking-wider text-red-800 min-[375px]:text-xs">
-                {isBn
-                  ? "শুভ বিবাহের দিনক্ষণ"
-                  : "Auspicious Date & Muhurat"}
+                {isBn ? "শুভ প্রীতিভোজের দিনক্ষণ" : "Reception Date & Time"}
               </span>
 
               <h3 className="mt-0.5 break-words font-serif text-base font-bold leading-snug text-red-950 min-[375px]:text-lg">
-                {isBn
-                  ? settings.weddingDateBn
-                  : settings.weddingDateEn}
+                {isBn ? settings.receptionDateBn : settings.receptionDateEn}
               </h3>
 
               <div className="mt-1 flex min-w-0 items-start gap-1.5 font-serif text-xs leading-relaxed text-stone-800 sm:text-sm">
@@ -192,8 +182,8 @@ export const Page1DateWedding: React.FC<Page1Props> = ({
 
                 <span className="min-w-0 break-words">
                   {isBn
-                    ? "শুভ বিবাহ লগ্ন: রাত ৮:২৫ মিনিট (সন্ধ্যা ৬:৩০ হইতে অতিথি সমাগম)"
-                    : "Auspicious Lagna: 8:25 PM (Reception starts from 6:30 PM)"}
+                    ? "সন্ধ্যা ৬:০০ হইতে অতিথি সমাগম"
+                    : "Reception starts from 6:00 PM"}
                 </span>
               </div>
             </div>
@@ -206,13 +196,13 @@ export const Page1DateWedding: React.FC<Page1Props> = ({
             <div className="min-w-0 break-words leading-relaxed">
               <span className="font-bold text-red-900">
                 {isBn
-                  ? settings.venueNameBn
-                  : settings.venueNameEn}
+                  ? settings.receptionVenueNameBn
+                  : settings.receptionVenueNameEn}
                 :
               </span>{" "}
               {isBn
-                ? settings.venueAddressBn
-                : settings.venueAddressEn}
+                ? settings.receptionVenueAddressBn
+                : settings.receptionVenueAddressEn}
             </div>
           </div>
         </div>
@@ -252,7 +242,7 @@ export const Page1DateWedding: React.FC<Page1Props> = ({
         <MandapDivider className="my-4" />
 
         {/* Action Buttons */}
-        <div className="mt-4 flex min-w-0 flex-col items-stretch justify-center gap-2.5 sm:flex-row sm:items-center">
+        {/* <div className="mt-4 flex min-w-0 flex-col items-stretch justify-center gap-2.5 sm:flex-row sm:items-center">
           <button
             type="button"
             onClick={onNextPage}
@@ -273,14 +263,11 @@ export const Page1DateWedding: React.FC<Page1Props> = ({
             className="flex w-full min-w-0 items-center justify-center gap-1 rounded-full border-2 border-yellow-200 bg-yellow-400 px-4 py-3 text-center font-serif text-xs font-bold text-red-950 shadow-md transition-all hover:bg-yellow-300 active:scale-95 sm:w-auto sm:px-5 sm:text-sm"
           >
             <span className="min-w-0 break-words">
-              {isBn
-                ? "উপস্থিতি নিশ্চিত করুন (RSVP)"
-                : "Confirm RSVP"}
+              {isBn ? "উপস্থিতি নিশ্চিত করুন (RSVP)" : "Confirm RSVP"}
             </span>
           </button>
-        </div>
+        </div> */}
       </RoyalFrame>
     </div>
   );
 };
-

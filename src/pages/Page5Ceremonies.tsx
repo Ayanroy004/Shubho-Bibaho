@@ -48,9 +48,6 @@ export const Page5Ceremonies: React.FC<Page5Props> = ({
     } else if (item.id === "gaye_holud") {
       startIso = "20261213T090000Z";
       endIso = "20261213T110000Z";
-    } else if (item.id === "bibaho") {
-      startIso = "20261213T180000Z";
-      endIso = "20261214T013000Z";
     } else if (item.id === "boubhat") {
       startIso = "20261214T140000Z";
       endIso = "20261214T153000Z";
@@ -82,13 +79,13 @@ export const Page5Ceremonies: React.FC<Page5Props> = ({
           <h2 className="break-words font-serif text-2xl font-bold leading-tight text-red-900 min-[375px]:text-3xl sm:text-4xl">
             {isBn
               ? "স্মারক লিপি (অনুষ্ঠান সূচী)"
-              : "Wedding Itinerary & Timeline"}
+              : "Ceremony Itinerary & Timeline"}
           </h2>
 
           <p className="mx-auto mt-1 max-w-md break-words px-1 text-xs font-serif leading-relaxed text-stone-600 sm:text-sm">
             {isBn
-              ? "আইবুড়ো ভাত, গায়ে হলুদ, শুভ পরিণয় ও প্রীতিভোজের নির্ঘণ্ট"
-              : "Detailed schedule of sacred rituals, timings, venues & festive feasts"}
+              ? "আইবুড়ো ভাত, গায়ে হলুদ, বৌভাত ও প্রীতিভোজের নির্ঘণ্ট"
+              : "Schedule for Aiburobhat, Gaye Holud, Boubhat & Grand Reception"}
           </p>
         </div>
 
@@ -181,7 +178,7 @@ export const Page5Ceremonies: React.FC<Page5Props> = ({
         <MandapDivider className="my-4" />
 
         {/* Navigation Footers */}
-        <div className="mt-4 flex min-w-0 flex-col items-stretch justify-between gap-2.5 sm:flex-row sm:items-center">
+        {/* <div className="mt-4 flex min-w-0 flex-col items-stretch justify-between gap-2.5 sm:flex-row sm:items-center">
           <button
             type="button"
             onClick={onGoToIndex}
@@ -203,7 +200,7 @@ export const Page5Ceremonies: React.FC<Page5Props> = ({
 
             <ArrowRight className="h-3.5 w-3.5 shrink-0 text-yellow-400 transition-transform group-hover:translate-x-1" />
           </button>
-        </div>
+        </div> */}
       </RoyalFrame>
     </div>
   );

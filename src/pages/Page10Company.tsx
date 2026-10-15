@@ -14,6 +14,7 @@ import {
   Mail,
   MapPin,
   Users,
+  MonitorSmartphone,
 } from "lucide-react";
 
 import { Language } from "../types";
@@ -103,6 +104,15 @@ const services = [
     descBn:
       "আনন্দ, হাসি ও স্বতঃস্ফূর্ত মুহূর্তগুলিকে ক্যামেরায় ধরে রেখে জন্মদিনকে স্মরণীয় করে তুলুন।",
   },
+  {
+    icon: MonitorSmartphone,
+    titleEn: "Digital Invitation Websites",
+    titleBn: "ডিজিটাল নিমন্ত্রণ ওয়েবসাইট",
+    descEn:
+      "Create interactive bilingual wedding websites with live maps, guestbook, and RSVP features.",
+    descBn:
+      "লাইভ ম্যাপ, গেস্টবুক ও RSVP ফিচার সহ আকর্ষণীয় দ্বিমুখী ডিজিটাল ওয়েডিং ওয়েবসাইট তৈরি করুন।",
+  },
 ];
 
 export const Page10Company: React.FC<Page10Props> = ({
@@ -145,8 +155,8 @@ export const Page10Company: React.FC<Page10Props> = ({
 
           <p className="mt-2 font-serif text-sm font-bold text-yellow-700 sm:text-base">
             {isBn
-              ? "সাতপাকের বন্ধন, সারাজীবনের পথচলা"
-              : "The bond of the seven paks, throughout life."}
+              ? "“সাত পাকের বন্ধন হোক আজীবন”"
+              : "Bound by the seven sacred steps, united for a lifetime."}
           </p>
 
           <p className="mx-auto mt-2 max-w-lg px-1 text-xs leading-relaxed text-stone-600 sm:text-sm">
@@ -337,8 +347,8 @@ export const Page10Company: React.FC<Page10Props> = ({
 
           <p className="font-serif text-sm font-bold leading-relaxed text-red-900 sm:text-base">
             {isBn
-              ? "আপনার জীবনের প্রতিটি বিশেষ মুহূর্ত হয়ে উঠুক চিরস্মরণীয়।"
-              : "Let every special moment of your life become a timeless memory."}
+              ? "“সাত পাকের বন্ধন হোক আজীবন”"
+              : "Bound by the seven sacred steps, united for a lifetime."}
           </p>
 
           <p className="mt-2 text-xs font-semibold text-yellow-700">
@@ -349,7 +359,7 @@ export const Page10Company: React.FC<Page10Props> = ({
         <MandapDivider className="my-4" />
 
         {/* Page Navigation */}
-        <div className="mt-4 flex min-w-0 flex-col items-stretch gap-2.5 sm:flex-row sm:items-center sm:justify-between">
+        {/* <div className="mt-4 flex min-w-0 flex-col items-stretch gap-2.5 sm:flex-row sm:items-center sm:justify-between">
           <button
             type="button"
             onClick={onGoToIndex}
@@ -367,7 +377,7 @@ export const Page10Company: React.FC<Page10Props> = ({
 
             <ArrowRight className="h-4 w-4 shrink-0 text-yellow-400 transition-transform group-hover:translate-x-1" />
           </button>
-        </div>
+        </div> */}
       </RoyalFrame>
     </div>
   );

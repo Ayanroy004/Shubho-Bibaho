@@ -40,7 +40,7 @@ export const Page7VenueMap: React.FC<Page7Props> = ({
 
             <span className="min-w-0 text-[9px] font-serif font-bold uppercase tracking-wide text-red-800 sm:text-xs sm:tracking-widest">
               {isBn
-                ? "॥ অধ্যায় ২: শুভ বিবাহের আসর ॥"
+                ? "॥ অধ্যায় ২: স্থান ও যাতায়াত ॥"
                 : "॥ Chapter 2: Venue & Directions ॥"}
             </span>
 
@@ -48,13 +48,13 @@ export const Page7VenueMap: React.FC<Page7Props> = ({
           </div>
 
           <h2 className="break-words font-serif text-2xl font-bold leading-tight text-red-900 sm:text-4xl">
-            {isBn ? "শুভ বিবাহের আসর" : "Wedding Venue & Live Map"}
+            {isBn ? "শুভ প্রীতিভোজের আসর" : "Grand Reception & Live Map"}
           </h2>
 
           <p className="mx-auto mt-1 max-w-md px-1 text-xs font-serif leading-relaxed text-stone-600 sm:text-sm">
             {isBn
-              ? "‘রায় বাড়ি’ ও সরাসরি লাইভ রুট ম্যাপ ও যাতায়াত নির্দেশিকা"
-              : 'Heritage venue "Roy Bari", interactive route navigation, and guest travel guide'}
+              ? "‘দে বাড়ি’ ও সরাসরি লাইভ রুট ম্যাপ ও যাতায়াত নির্দেশিকা"
+              : 'Heritage venue "Dey Bari", interactive route navigation, and guest travel guide'}
           </p>
         </div>
 
@@ -67,17 +67,19 @@ export const Page7VenueMap: React.FC<Page7Props> = ({
 
             <div className="min-w-0 flex-1">
               <span className="text-[10px] font-bold uppercase tracking-wider text-red-800 sm:text-[11px]">
-                {isBn ? "মূল বিবাহ বাসর" : "Main Wedding Venue"}
+                {isBn ? "মূল প্রীতিভোজের স্থান" : "Main Reception Venue"}
               </span>
 
               <h3 className="mt-0.5 break-words font-serif text-base font-bold leading-snug text-red-950 sm:text-lg">
-                {isBn ? settings.venueNameBn : settings.venueNameEn}
+                {isBn
+                  ? settings.receptionVenueNameBn
+                  : settings.receptionVenueNameEn}
               </h3>
 
               <p className="mt-1 break-words text-xs font-serif leading-relaxed text-stone-700">
                 {isBn
-                  ? settings.venueAddressBn
-                  : settings.venueAddressEn}
+                  ? settings.receptionVenueAddressBn
+                  : settings.receptionVenueAddressEn}
               </p>
             </div>
           </div>
@@ -85,11 +87,11 @@ export const Page7VenueMap: React.FC<Page7Props> = ({
           {/* Responsive Google Map */}
           <div className="relative mt-3.5 aspect-[16/9] min-h-[170px] w-full min-w-0 overflow-hidden rounded-xl border-2 border-yellow-400 bg-stone-100 shadow-inner sm:min-h-[240px]">
             <iframe
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d30625.16352354691!2d88.08379168797802!3d23.408974307997568!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39f9ab9f69fc4bc9%3A0x4242649b3001d7d4!2sManteswar%2C%20West%20Bengal%20713145!5e1!3m2!1sen!2sin!4v1791653541876!5m2!1sen!2sin"
-              title="Wedding venue Google Map"
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3318.4224638926175!2d88.0845356747757!3d23.207538309401393!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39f85153d0887837%3A0x1b0947cd4ee3b736!2sMaytri%20Sangha%20Club%20Amadpur!5e1!3m2!1sen!2sin!4v1792077865901!5m2!1sen!2sin"
+              title="Grand Wedding Reception venue Google Map"
               className="absolute inset-0 h-full w-full border-0"
-              loading="lazy"
               allowFullScreen
+              loading="lazy"
               referrerPolicy="strict-origin-when-cross-origin"
             />
           </div>
@@ -133,9 +135,7 @@ export const Page7VenueMap: React.FC<Page7Props> = ({
               <Train className="h-4 w-4 shrink-0 text-red-700" />
 
               <span>
-                {isBn
-                  ? "ট্রেন বা লোকাল রেলপথে:"
-                  : "By Train (Local Rail):"}
+                {isBn ? "ট্রেন বা লোকাল রেলপথে:" : "By Train (Local Rail):"}
               </span>
             </div>
 
@@ -202,7 +202,7 @@ export const Page7VenueMap: React.FC<Page7Props> = ({
         <MandapDivider className="my-4" />
 
         {/* Navigation Footers */}
-        <div className="mt-4 flex min-w-0 flex-col items-stretch gap-2.5 sm:flex-row sm:items-center sm:justify-between">
+        {/* <div className="mt-4 flex min-w-0 flex-col items-stretch gap-2.5 sm:flex-row sm:items-center sm:justify-between">
           <button
             type="button"
             onClick={onGoToIndex}
@@ -224,7 +224,7 @@ export const Page7VenueMap: React.FC<Page7Props> = ({
 
             <ArrowRight className="h-3.5 w-3.5 shrink-0 text-yellow-400 transition-transform group-hover:translate-x-1" />
           </button>
-        </div>
+        </div> */}
       </RoyalFrame>
     </div>
   );
