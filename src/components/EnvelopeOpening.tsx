@@ -213,7 +213,7 @@ export const EnvelopeOpening: React.FC<EnvelopeOpeningProps> = ({
         </div>
 
         <h1 className="font-serif text-2xl font-bold leading-tight text-yellow-400 drop-shadow-[0_2px_12px_rgba(250,204,21,0.25)] sm:text-4xl">
-          {isBn ? "শুভ পরিণয় নিমন্ত্রণ পত্র" : "The Royal Wedding Invitation"}
+          {isBn ? "শুভ প্রীতিভোজ নিমন্ত্রণ পত্র" : "Grand Wedding Reception Invitation"}
         </h1>
 
         <p className="mt-2 font-serif text-xs tracking-wide text-yellow-100/80 sm:text-sm">
@@ -258,7 +258,7 @@ export const EnvelopeOpening: React.FC<EnvelopeOpeningProps> = ({
             </div>
 
             <div className="absolute inset-x-0 bottom-5 text-center font-serif text-xs tracking-[0.3em] text-red-900/40">
-              ✦ SHUBHO BIBAHO ✦
+              ✦ GRAND WEDDING RECEPTION ✦
             </div>
           </div>
 
@@ -288,8 +288,8 @@ export const EnvelopeOpening: React.FC<EnvelopeOpeningProps> = ({
 
               <span className="block font-serif text-[9px] font-bold uppercase tracking-[0.2em] text-red-800 sm:text-xs">
                 {isBn
-                  ? "॥ শুভ বিবাহ নিমন্ত্রণ পত্র ॥"
-                  : "॥ Royal Wedding Invitation ॥"}
+                  ? "॥ শুভ প্রীতিভোজ নিমন্ত্রণ পত্র ॥"
+                  : "॥ Grand Wedding Reception Invitation ॥"}
               </span>
             </div>
 
@@ -372,7 +372,7 @@ export const EnvelopeOpening: React.FC<EnvelopeOpeningProps> = ({
               <div className="flex items-center gap-2 pt-1 text-yellow-300">
                 <span className="text-xs">✦</span>
                 <span className="font-serif text-[11px] font-bold tracking-[0.2em] sm:text-sm">
-                  {isBn ? "পরম স্নেহের শুভ আমন্ত্রণ" : "Shubho Bibaho"}
+                  {isBn ? "পরম স্নেহের শুভ আমন্ত্রণ" : "Grand Wedding Reception"}
                 </span>
                 <span className="text-xs">✦</span>
               </div>
@@ -474,7 +474,7 @@ export const EnvelopeOpening: React.FC<EnvelopeOpeningProps> = ({
             <span>
               {isBn
                 ? "আমন্ত্রণ পত্র উন্মোচিত হচ্ছে..."
-                : "Opening Your Wedding Invitation..."}
+                : "Opening Your Grand Wedding Reception Invitation..."}
             </span>
           </div>
         )}
