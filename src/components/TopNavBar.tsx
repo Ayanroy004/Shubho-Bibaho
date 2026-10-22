@@ -42,7 +42,7 @@ export const TopNavBar: React.FC<TopNavBarProps> = ({
             className="flex min-w-0 shrink items-center rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-yellow-300"
           >
             <img
-              src="/image/logo.png"
+              src="../../public/image/logo.png"
               alt="Company Logo"
               className="h-8 w-auto max-w-[110px] object-contain sm:h-10 sm:max-w-[150px] md:h-11"
             />
