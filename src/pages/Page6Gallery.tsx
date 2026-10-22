@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Camera, Heart, ArrowRight, X, ChevronLeft, ChevronRight, Sparkles } from 'lucide-react';
 import { Language, WeddingPhoto } from '../types';
-import { galleryPhotos } from '../weddingData';
+// import { galleryPhotos } from '../weddingData';
 import { KolkaOrnament, MandapDivider, RoyalFrame } from '../components/Ornaments';
 
 interface Page6Props {

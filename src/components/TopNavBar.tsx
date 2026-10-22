@@ -1,7 +1,7 @@
 import React from "react";
 import { Mail, Layers, Music, VolumeX, Globe } from "lucide-react";
 import { Language } from "../types";
-
+import logo from "../../public/image/logo.png";
 interface TopNavBarProps {
   language: Language;
   onLanguageChange: (lang: Language) => void;
@@ -42,7 +42,7 @@ export const TopNavBar: React.FC<TopNavBarProps> = ({
             className="flex min-w-0 shrink items-center rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-yellow-300"
           >
             <img
-              src="../../public/image/logo.png"
+              src={logo}
               alt="Company Logo"
               className="h-8 w-auto max-w-[110px] object-contain sm:h-10 sm:max-w-[150px] md:h-11"
             />
