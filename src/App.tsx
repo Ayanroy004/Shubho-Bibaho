@@ -203,6 +203,146 @@ function WeddingApp() {
 
   return (
     <div className="relative flex min-h-screen w-full flex-col justify-between bg-red-950 font-bengali text-white">
+      {/* Expanded responsive Bengali wedding background */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none fixed inset-0 z-0 overflow-hidden"
+      >
+        {/* Warm red glow */}
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(153,27,27,0.4),transparent_75%)]" />
+
+        {/* Reusable floral ornament */}
+        {[
+          "left-0 top-0",
+          "right-0 top-0 -scale-x-100",
+          "bottom-0 left-0 rotate-180",
+          "bottom-0 right-0 rotate-180 -scale-x-100",
+        ].map((position, index) => (
+          <svg
+            key={index}
+            viewBox="0 0 120 120"
+            className={`absolute h-24 w-24 text-amber-200/40 sm:h-32 sm:w-32 lg:h-40 lg:w-40 ${position}`}
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="1.2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <path d="M0 115 Q12 55 70 38 Q82 16 120 0" />
+            <path d="M0 85 Q24 85 30 56 Q52 66 70 38" />
+            <circle cx="42" cy="42" r="20" />
+            <circle cx="42" cy="42" r="10" />
+
+            {Array.from({ length: 12 }, (_, i) => (
+              <g key={i} transform={`rotate(${i * 30} 42 42)`}>
+                <path d="M42 32 Q30 20 42 10 Q54 20 42 32Z" />
+              </g>
+            ))}
+
+            <circle cx="42" cy="42" r="3" fill="currentColor" />
+
+            {/* Leaves */}
+            <path d="M18 74 Q0 55 4 42 Q24 49 18 74Z" />
+            <path d="M34 57 Q24 35 35 24 Q49 41 34 57Z" />
+            <path d="M63 40 Q60 18 80 14 Q82 33 63 40Z" />
+
+            {/* Small flower */}
+            <g transform="translate(18 94)">
+              {Array.from({ length: 6 }, (_, i) => (
+                <ellipse
+                  key={i}
+                  cx="0"
+                  cy="-5"
+                  rx="3"
+                  ry="6"
+                  transform={`rotate(${i * 60})`}
+                />
+              ))}
+              <circle r="2" fill="currentColor" />
+            </g>
+          </svg>
+        ))}
+
+        {/* Left and right decorative vines */}
+        {[0, 1].map((side) => (
+          <svg
+            key={side}
+            viewBox="0 0 70 600"
+            preserveAspectRatio="none"
+            className={`absolute top-[12%] h-[76%] w-10 text-amber-200/30 sm:w-14 lg:w-20 ${
+              side === 0 ? "left-0" : "right-0 -scale-x-100"
+            }`}
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="1.1"
+            strokeLinecap="round"
+          >
+            <path d="M8 0 Q58 50 15 100 T15 200 T15 300 T15 400 T15 500 T8 600" />
+
+            {Array.from({ length: 12 }, (_, i) => {
+              const y = 20 + i * 48;
+              return (
+                <g
+                  key={i}
+                  transform={`translate(${i % 2 === 0 ? 18 : 30} ${y})`}
+                >
+                  <path d="M0 0 Q-20 -12 -15 -28 Q2 -22 0 0Z" />
+                  <path d="M0 0 Q20 -12 15 -28 Q-2 -22 0 0Z" />
+                  <circle cy="3" r="2" fill="currentColor" />
+                </g>
+              );
+            })}
+          </svg>
+        ))}
+
+        {/* Extra floral motifs along the edges */}
+        {Array.from({ length: 10 }, (_, i) => (
+          <svg
+            key={i}
+            viewBox="0 0 40 40"
+            className={`absolute h-7 w-7 text-amber-200/35 sm:h-9 sm:w-9 lg:h-11 lg:w-11 ${
+              i % 2 === 0 ? "left-[7%]" : "right-[7%]"
+            }`}
+            style={{ top: `${12 + i * 8}%` }}
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="1"
+          >
+            {Array.from({ length: 8 }, (_, j) => (
+              <ellipse
+                key={j}
+                cx="20"
+                cy="10"
+                rx="3"
+                ry="8"
+                transform={`rotate(${j * 45} 20 20)`}
+              />
+            ))}
+            <circle cx="20" cy="20" r="3" fill="currentColor" />
+          </svg>
+        ))}
+
+        {/* Gold dotted border */}
+        <div className="absolute bottom-5 left-3 top-5 border-l border-dashed border-amber-200/25 sm:left-5 lg:left-8" />
+        <div className="absolute bottom-5 right-3 top-5 border-r border-dashed border-amber-200/25 sm:right-5 lg:right-8" />
+
+        {/* Decorative top and bottom lines */}
+        <div className="absolute left-[18%] right-[18%] top-3 border-t border-amber-200/20" />
+        <div className="absolute bottom-3 left-[18%] right-[18%] border-t border-amber-200/20" />
+
+        {/* Tiny golden stars */}
+        {Array.from({ length: 32 }, (_, i) => (
+          <span
+            key={i}
+            className="absolute h-1 w-1 rounded-full bg-amber-200/40"
+            style={{
+              left: `${5 + ((i * 29) % 90)}%`,
+              top: `${5 + ((i * 37) % 90)}%`,
+            }}
+          />
+        ))}
+      </div>
+
       {/* Decorative background */}
       <div
         aria-hidden="true"

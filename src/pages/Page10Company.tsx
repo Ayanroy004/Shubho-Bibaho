@@ -158,7 +158,7 @@ export const Page10Company: React.FC<Page10Props> = ({
           <p className="mt-2 font-serif text-sm font-bold text-yellow-700 sm:text-base">
             {isBn
               ? "“সাত পাকের বন্ধন হোক আজীবন”"
-              : "The Bound of the seven paks, throughout lifetime."}
+              : "The bond of the seven paks, throughout life."}
           </p>
 
           <p className="mx-auto mt-2 max-w-lg px-1 text-xs leading-relaxed text-stone-600 sm:text-sm">
@@ -188,7 +188,7 @@ export const Page10Company: React.FC<Page10Props> = ({
             <p className="font-serif text-sm font-bold leading-relaxed text-red-900 sm:text-base">
               {isBn
                 ? "“সাত পাকের বন্ধন হোক আজীবন”"
-                : "The Bound of the seven paks, throughout lifetime."}
+                : "The bond of the seven paks, throughout life."}
             </p>
           </div>
         </section>
@@ -350,7 +350,7 @@ export const Page10Company: React.FC<Page10Props> = ({
           <p className="font-serif text-sm font-bold leading-relaxed text-red-900 sm:text-base">
             {isBn
               ? "“সাত পাকের বন্ধন হোক আজীবন”"
-              : "The Bound of the seven paks, throughout lifetime."}
+              : "The bond of the seven paks, throughout life."}
           </p>
 
           <p className="mt-2 text-xs font-semibold text-yellow-700">
