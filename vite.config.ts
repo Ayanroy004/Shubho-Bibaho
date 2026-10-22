@@ -5,12 +5,12 @@ import path from "path";
 import { defineConfig } from "vite";
 
 config({
-  path: './.env',
+  path: "./.env",
 });
 
 export default defineConfig({
-
   plugins: [react(), tailwindcss()],
+  base: "/Shubho-Bibaho/",
   resolve: {
     alias: {
       "@": path.resolve(import.meta.dirname, "."),
