@@ -350,6 +350,7 @@ export const Page2BoyGirlDetails: React.FC<Page2Props> = ({
                   aria-label="Close image preview"
                   onClick={() => setSelectedPhoto(null)}
                   style={{
+                    paddingTop: 4,
                     width: 52,
                     height: 52,
                     minWidth: 52,
