@@ -95,7 +95,7 @@ export const PageSelectModal: React.FC<PageSelectModalProps> = ({
                   <Icon className={`w-4 h-4 shrink-0 ${isActive ? 'text-yellow-400' : 'text-red-700'}`} />
                   <span className="truncate">{isBn ? p.titleBn : p.titleEn}</span>
                 </div>
-                {isActive && <span className="text-xs text-yellow-400 font-bold shrink-0">সক্রিয় ✓</span>}
+                {isActive && <span className="text-xs text-yellow-400 font-bold shrink-0"> { isBn ? 'সক্রিয় ✓' : 'Active ✓'}</span>}
               </button>
             );
           })}

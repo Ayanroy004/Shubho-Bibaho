@@ -247,6 +247,14 @@ export const Page2BoyGirlDetails: React.FC<Page2Props> = ({
                       ? settings.bride.grandmotherBn
                       : settings.bride.grandmotherEn}
                   </span>
+                  <span className="font-bold text-red-900 block">
+                    {isBn ? "ভাই:" : "Brother:"}
+                  </span>
+                  <span>
+                    {isBn
+                      ? "রিতেশ বসু"
+                      : "Ritesh Basu"}
+                  </span>
                 </div>
 
                 <div className="flex items-start gap-1.5 pt-1 border-t border-stone-200">
