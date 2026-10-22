@@ -5,6 +5,7 @@ import {
   Route,
   useLocation,
   useNavigate,
+  HashRouter,
 } from "react-router-dom";
 
 import { initialWeddingSettings, initialGuestbookEntries } from "./weddingData";
@@ -383,8 +384,8 @@ function WeddingApp() {
 
 export default function App() {
   return (
-    <BrowserRouter>
+    <HashRouter>
       <WeddingApp />
-    </BrowserRouter>
+    </HashRouter>
   );
 }
