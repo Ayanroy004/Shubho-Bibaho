@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   Heart,
   Home,
@@ -13,6 +13,7 @@ import {
   MandapDivider,
   RoyalFrame,
 } from "../components/Ornaments";
+import { createPortal } from "react-dom";
 
 interface Page2Props {
   settings: WeddingSettings;
@@ -26,6 +27,27 @@ export const Page2BoyGirlDetails: React.FC<Page2Props> = ({
   onNextPage,
 }) => {
   const isBn = language === "bn";
+
+  const [selectedPhoto, setSelectedPhoto] = useState<{
+    src: string;
+    alt: string;
+  } | null>(null);
+
+  useEffect(() => {
+    if (!selectedPhoto) return;
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setSelectedPhoto(null);
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [selectedPhoto]);
 
   return (
     <div className="w-full max-w-2xl mx-auto px-2.5 sm:px-4 py-4 pb-28 text-red-950">
@@ -73,7 +95,15 @@ export const Page2BoyGirlDetails: React.FC<Page2Props> = ({
                     <img
                       src={settings.groom.photoUrl}
                       alt={isBn ? settings.groom.nameBn : settings.groom.nameEn}
-                      className="w-full h-full object-cover scale-180 object-[center_30%] rounded-full"
+                      className="w-full h-full object-cover scale-180 object-[center_30%] rounded-full cursor-zoom-in"
+                      onClick={() =>
+                        setSelectedPhoto({
+                          src: settings.groom.photoUrl,
+                          alt: isBn
+                            ? settings.groom.nameBn
+                            : settings.groom.nameEn,
+                        })
+                      }
                     />
                   </div>
                   <div className="absolute -bottom-1 -right-1 p-1 rounded-full bg-red-800 text-yellow-300 border border-yellow-400 shadow">
@@ -162,7 +192,15 @@ export const Page2BoyGirlDetails: React.FC<Page2Props> = ({
                     <img
                       src={settings.bride.photoUrl}
                       alt={isBn ? settings.bride.nameBn : settings.bride.nameEn}
-                      className="w-full h-full object-cover scale-150 object-[center_-5%] rounded-full"
+                      className="w-full h-full object-cover scale-150 object-[center_-5%] rounded-full cursor-zoom-in"
+                      onClick={() =>
+                        setSelectedPhoto({
+                          src: settings.bride.photoUrl,
+                          alt: isBn
+                            ? settings.bride.nameBn
+                            : settings.bride.nameEn,
+                        })
+                      }
                     />
                   </div>
                   <div className="absolute -bottom-1 -right-1 p-1 rounded-full bg-red-800 text-yellow-300 border border-yellow-400 shadow">
@@ -272,6 +310,101 @@ export const Page2BoyGirlDetails: React.FC<Page2Props> = ({
             <ArrowRight className="w-4 h-4 text-yellow-400 group-hover:translate-x-1 transition-transform" />
           </button>
         </div> */}
+
+        {selectedPhoto &&
+          typeof document !== "undefined" &&
+          createPortal(
+            <div
+              onClick={() => setSelectedPhoto(null)}
+              style={{
+                position: "fixed",
+                inset: 0,
+                zIndex: 2147483647,
+                width: "100vw",
+                height: "100vh",
+                // height: "100dvh",
+                backgroundColor: "rgba(0, 0, 0, 0.96)",
+                display: "flex",
+                flexDirection: "column",
+                paddingTop: "env(safe-area-inset-top, 8px)",
+                paddingBottom: "env(safe-area-inset-bottom, 8px)",
+                paddingLeft: 12,
+                paddingRight: 12,
+                boxSizing: "border-box",
+              }}
+            >
+              {/* Dedicated close-button row */}
+              <div
+                onClick={(event) => event.stopPropagation()}
+                style={{
+                  width: "100%",
+                  display: "flex",
+                  justifyContent: "flex-end",
+                  flexShrink: 0,
+                  padding: "8px 4px 12px",
+                  boxSizing: "border-box",
+                }}
+              >
+                <button
+                  type="button"
+                  aria-label="Close image preview"
+                  onClick={() => setSelectedPhoto(null)}
+                  style={{
+                    width: 52,
+                    height: 52,
+                    minWidth: 52,
+                    minHeight: 52,
+                    borderRadius: "50%",
+                    border: "3px solid white",
+                    backgroundColor: "#dc2626",
+                    color: "#ffffff",
+                    fontSize: 36,
+                    fontWeight: 700,
+                    lineHeight: 1,
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    cursor: "pointer",
+                    position: "relative",
+                    zIndex: 2147483647,
+                    touchAction: "manipulation",
+                    WebkitAppearance: "none",
+                  }}
+                >
+                  ×
+                </button>
+              </div>
+
+              {/* Full image, scaled to fit the remaining screen */}
+              <div
+                onClick={(event) => event.stopPropagation()}
+                style={{
+                  flex: 1,
+                  minHeight: 0,
+                  minWidth: 0,
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  overflow: "hidden",
+                }}
+              >
+                <img
+                  src={selectedPhoto.src}
+                  alt={selectedPhoto.alt}
+                  style={{
+                    display: "block",
+                    maxWidth: "100%",
+                    maxHeight: "100%",
+                    width: "auto",
+                    height: "auto",
+                    objectFit: "contain",
+                    borderRadius: 8,
+                  }}
+                />
+              </div>
+            </div>,
+            document.body,
+          )}
       </RoyalFrame>
     </div>
   );

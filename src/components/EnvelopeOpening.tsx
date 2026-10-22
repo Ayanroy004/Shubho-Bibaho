@@ -19,6 +19,124 @@ type AnimationStage =
   | "card-rising"
   | "transitioning";
 
+const WhiteMehndiFrame: React.FC = () => {
+  const mandalaPetals = Array.from({ length: 16 }, (_, i) => i * 22.5);
+
+  const positions = [
+    { x: 5, y: 5, scale: 1.15 },
+    { x: 395, y: 5, scale: 1.15 },
+    { x: 5, y: 400, scale: 0.8 },
+    { x: 395, y: 400, scale: 0.8 },
+    { x: 5, y: 795, scale: 1.15 },
+    { x: 395, y: 795, scale: 1.15 },
+  ];
+
+  return (
+    <svg
+      aria-hidden="true"
+      viewBox="0 0 400 800"
+      preserveAspectRatio="xMidYMid slice"
+      className="pointer-events-none absolute inset-0 z-0 h-full w-full text-white"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="0.9"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <g opacity="0.32">
+        {/* Decorative side borders */}
+        <path
+          d="M12 0 V800 M20 0 V800 M388 0 V800 M380 0 V800"
+          strokeDasharray="2 5"
+        />
+
+        {/* Repeated floral mandalas */}
+        {positions.map(({ x, y, scale }, index) => (
+          <g
+            key={index}
+            transform={`translate(${x} ${y}) scale(${x > 200 ? -scale : scale} ${scale})`}
+          >
+            <circle r="35" />
+            <circle r="30" strokeDasharray="1 3" />
+
+            {mandalaPetals.map((angle) => (
+              <g key={angle} transform={`rotate(${angle})`}>
+                <path d="M0 -8 C-8 -19 -7 -31 0 -39 C7 -31 8 -19 0 -8Z" />
+                <path d="M0 -14 Q-4 -26 0 -34 Q4 -26 0 -14Z" />
+                <circle cx="0" cy="-42" r="1.5" fill="currentColor" />
+              </g>
+            ))}
+
+            <circle r="13" />
+            <circle r="5" fill="currentColor" />
+          </g>
+        ))}
+
+        {/* Paisley leaves and vines along the sides */}
+        {[0, 1].map((side) => (
+          <g
+            key={side}
+            transform={side ? "translate(400 0) scale(-1 1)" : undefined}
+          >
+            <path d="M12 100 Q65 125 18 165 Q-5 190 20 215" />
+            <path d="M12 290 Q65 315 18 355 Q-5 380 20 405" />
+            <path d="M12 490 Q65 515 18 555 Q-5 580 20 605" />
+            <path d="M12 680 Q65 705 18 745" />
+
+            {[130, 320, 520, 710].map((y) => (
+              <g key={y} transform={`translate(20 ${y})`}>
+                <path d="M0 0 C-23 -10 -28 -35 -10 -49 C-12 -29 8 -28 10 -13 C12 -5 6 0 0 0Z" />
+                <path d="M-4 -8 Q-17 -22 -12 -37" />
+                <circle cx="-8" cy="-15" r="2" />
+              </g>
+            ))}
+          </g>
+        ))}
+
+        {/* Small floral details */}
+        {Array.from({ length: 24 }, (_, i) => {
+          const x = i % 2 === 0 ? 30 + (i % 6) * 12 : 370 - (i % 6) * 12;
+          const y = 45 + Math.floor(i / 2) * 62;
+
+          return (
+            <g key={i} transform={`translate(${x} ${y})`}>
+              {Array.from({ length: 6 }, (_, petal) => (
+                <ellipse
+                  key={petal}
+                  cx="0"
+                  cy="-4"
+                  rx="2.5"
+                  ry="4"
+                  transform={`rotate(${petal * 60})`}
+                />
+              ))}
+              <circle r="1.5" fill="currentColor" />
+            </g>
+          );
+        })}
+
+        {/* Top and bottom ornamental garlands */}
+        <path d="M30 0 Q100 55 170 0 M230 0 Q300 55 370 0" />
+        <path d="M30 800 Q100 745 170 800 M230 800 Q300 745 370 800" />
+
+        {[55, 100, 145, 255, 300, 345].map((x) => (
+          <g key={x} transform={`translate(${x} 22)`}>
+            <path d="M0 0 V20 L-4 25 L0 30 L4 25Z" />
+            <circle cy="35" r="2" fill="currentColor" />
+          </g>
+        ))}
+
+        {[55, 100, 145, 255, 300, 345].map((x) => (
+          <g key={x} transform={`translate(${x} 778)`}>
+            <path d="M0 0 V-20 L-4 -25 L0 -30 L4 -25Z" />
+            <circle cy="-35" r="2" fill="currentColor" />
+          </g>
+        ))}
+      </g>
+    </svg>
+  );
+};
+
 export const EnvelopeOpening: React.FC<EnvelopeOpeningProps> = ({
   onOpen,
   language,
@@ -125,6 +243,10 @@ export const EnvelopeOpening: React.FC<EnvelopeOpeningProps> = ({
       }`}
     >
       {/* Ambient gold lighting */}
+      <div className="pointer-events-none absolute inset-0 z-0 overflow-hidden">
+        <WhiteMehndiFrame />
+      </div>
+
       <div className="pointer-events-none absolute -left-24 -top-24 h-72 w-72 rounded-full bg-yellow-500/10 blur-3xl" />
       <div className="pointer-events-none absolute -bottom-24 -right-20 h-80 w-80 rounded-full bg-red-500/20 blur-3xl" />
       <div className="pointer-events-none absolute left-1/2 top-1/2 h-96 w-96 -translate-x-1/2 -translate-y-1/2 rounded-full border border-yellow-400/10" />
@@ -213,7 +335,9 @@ export const EnvelopeOpening: React.FC<EnvelopeOpeningProps> = ({
         </div>
 
         <h1 className="font-serif text-2xl font-bold leading-tight text-yellow-400 drop-shadow-[0_2px_12px_rgba(250,204,21,0.25)] sm:text-4xl">
-          {isBn ? "শুভ প্রীতিভোজ নিমন্ত্রণ পত্র" : "Grand Wedding Reception Invitation"}
+          {isBn
+            ? "শুভ প্রীতিভোজ নিমন্ত্রণ পত্র"
+            : "Grand Wedding Reception Invitation"}
         </h1>
 
         <p className="mt-2 font-serif text-xs tracking-wide text-yellow-100/80 sm:text-sm">
@@ -372,7 +496,9 @@ export const EnvelopeOpening: React.FC<EnvelopeOpeningProps> = ({
               <div className="flex items-center gap-2 pt-1 text-yellow-300">
                 <span className="text-xs">✦</span>
                 <span className="font-serif text-[11px] font-bold tracking-[0.2em] sm:text-sm">
-                  {isBn ? "পরম স্নেহের শুভ আমন্ত্রণ" : "Grand Wedding Reception"}
+                  {isBn
+                    ? "পরম স্নেহের শুভ আমন্ত্রণ"
+                    : "Grand Wedding Reception"}
                 </span>
                 <span className="text-xs">✦</span>
               </div>

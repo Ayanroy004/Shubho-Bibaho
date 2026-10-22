@@ -83,6 +83,7 @@
   height: 22px;
   border-top: 2px solid #facc15;
   border-left: 2px solid #facc15;
+  border-top-left-radius: 10px;
 }
 
 .ornate-corner-tr {
@@ -93,6 +94,7 @@
   height: 22px;
   border-top: 2px solid #facc15;
   border-right: 2px solid #facc15;
+  border-top-right-radius: 10px;
 }
 
 .ornate-corner-bl {
@@ -103,6 +105,7 @@
   height: 22px;
   border-bottom: 2px solid #facc15;
   border-left: 2px solid #facc15;
+  border-bottom-left-radius: 10px;
 }
 
 .ornate-corner-br {
@@ -113,6 +116,7 @@
   height: 22px;
   border-bottom: 2px solid #facc15;
   border-right: 2px solid #facc15;
+  border-bottom-right-radius: 10px;
 }
 
 @media (min-width: 640px) {

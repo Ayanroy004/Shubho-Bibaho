@@ -138,15 +138,17 @@ export const Page10Company: React.FC<Page10Props> = ({
           </div>
 
           <div className="mx-auto mb-3 flex h-16 w-16 items-center justify-center overflow-hidden rounded-full border-2 border-yellow-400 bg-red-800 shadow-md sm:h-20 sm:w-20">
-            <img
-              src={logo}
-              alt="Saatpak Films Logo"
-              className="h-full w-full object-contain p-1"
-            />
+            <a href={INSTAGRAM_URL}>
+              <img
+                src={logo}
+                alt="Saatpak Films Logo"
+                className="h-full w-full object-contain p-1"
+              />
+            </a>
           </div>
 
           <h2 className="break-words font-serif text-3xl font-bold leading-tight text-red-900 sm:text-4xl">
-            {COMPANY_NAME}
+            {isBn ? "সাতপাক ফিল্ম" : `${COMPANY_NAME}`}
           </h2>
 
           <p className="mt-1 text-xs font-semibold tracking-wide text-red-800 sm:text-sm">
@@ -156,7 +158,7 @@ export const Page10Company: React.FC<Page10Props> = ({
           <p className="mt-2 font-serif text-sm font-bold text-yellow-700 sm:text-base">
             {isBn
               ? "“সাত পাকের বন্ধন হোক আজীবন”"
-              : "Bound by the seven sacred steps, united for a lifetime."}
+              : "The Bound of the seven paks, throughout lifetime."}
           </p>
 
           <p className="mx-auto mt-2 max-w-lg px-1 text-xs leading-relaxed text-stone-600 sm:text-sm">
@@ -186,7 +188,7 @@ export const Page10Company: React.FC<Page10Props> = ({
             <p className="font-serif text-sm font-bold leading-relaxed text-red-900 sm:text-base">
               {isBn
                 ? "“সাত পাকের বন্ধন হোক আজীবন”"
-                : "Bound by the seven sacred steps, united for a lifetime."}
+                : "The Bound of the seven paks, throughout lifetime."}
             </p>
           </div>
         </section>
@@ -348,7 +350,7 @@ export const Page10Company: React.FC<Page10Props> = ({
           <p className="font-serif text-sm font-bold leading-relaxed text-red-900 sm:text-base">
             {isBn
               ? "“সাত পাকের বন্ধন হোক আজীবন”"
-              : "Bound by the seven sacred steps, united for a lifetime."}
+              : "The Bound of the seven paks, throughout lifetime."}
           </p>
 
           <p className="mt-2 text-xs font-semibold text-yellow-700">
