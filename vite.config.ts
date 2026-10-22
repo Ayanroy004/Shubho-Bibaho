@@ -10,7 +10,7 @@ config({
 
 export default defineConfig({
   plugins: [react(), tailwindcss()],
-  base: "/Shubho-Bibaho/",
+  base: "/",
   resolve: {
     alias: {
       "@": path.resolve(import.meta.dirname, "."),
