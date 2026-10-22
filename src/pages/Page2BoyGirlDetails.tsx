@@ -228,6 +228,11 @@ export const Page2BoyGirlDetails: React.FC<Page2Props> = ({
                     {isBn ? settings.bride.fatherBn : settings.bride.fatherEn} ও{" "}
                     {isBn ? settings.bride.motherBn : settings.bride.motherEn}
                   </span>
+
+                  <span className="font-bold text-red-900 block">
+                    {isBn ? "ভাই:" : "Brother:"}
+                  </span>
+                  <span>{isBn ? "রিতেশ বসু" : "Ritesh Basu"}</span>
                 </div>
 
                 <div>
@@ -246,14 +251,6 @@ export const Page2BoyGirlDetails: React.FC<Page2Props> = ({
                     {isBn
                       ? settings.bride.grandmotherBn
                       : settings.bride.grandmotherEn}
-                  </span>
-                  <span className="font-bold text-red-900 block">
-                    {isBn ? "ভাই:" : "Brother:"}
-                  </span>
-                  <span>
-                    {isBn
-                      ? "রিতেশ বসু"
-                      : "Ritesh Basu"}
                   </span>
                 </div>
 
