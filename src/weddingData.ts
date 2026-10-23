@@ -10,7 +10,7 @@ import girl from "../public/image/girl.jpeg";
 export const initialWeddingSettings: WeddingSettings = {
   groom: {
     nameBn: "অর্ঘ্য",
-    nameEn: "Argha",
+    nameEn: "Arghya",
     // subTitleBn: 'বি.টেক (কম্পিউটার সায়েন্স), সফটওয়্যার আর্কিটেক্ট',
     // subTitleEn: 'B.Tech (CSE), Software Architect',
     fatherBn: "শ্রী রঘুনাথ দে",
@@ -22,7 +22,7 @@ export const initialWeddingSettings: WeddingSettings = {
     grandmotherBn: "স্বর্গীয় কান্তা দে",
     grandmotherEn: "Late Kanta Dey",
     addressBn: "আমাদপুর, মেমারি, পূর্ব বর্ধমান",
-    addressEn: 'Amadpur, Memari, Purba Bardhaman',
+    addressEn: "Amadpur, Memari, Purba Bardhaman",
     bioBn: "শান্ত, সংস্কৃতিমনা ও স্বপ্নবান। পরিবার ও সঙ্গীতকে ভালোবাসেন।",
     bioEn:
       "Cultured, gentle, and passionate about technology, Indian classical music, and family values.",
@@ -42,7 +42,7 @@ export const initialWeddingSettings: WeddingSettings = {
     grandmotherBn: "স্বর্গীয় রিনা বসু",
     grandmotherEn: "Late Rina Basu",
     addressBn: "মাতিশ্বর বসুপাড়া পূর্ব বর্ধমান",
-    addressEn: 'Matishwar Basupara East Burdwan',
+    addressEn: "Matishwar Basupara East Burdwan",
     bioBn: "হাসিখুশি, সাহিত্যপ্রেমী এবং রবীন্দ্রসঙ্গীতের অনুরক্ত সাধক।",
     bioEn:
       "Cheerful, bibliophile, lover of Rabindra Sangeet, literature, and timeless Bengali traditions.",

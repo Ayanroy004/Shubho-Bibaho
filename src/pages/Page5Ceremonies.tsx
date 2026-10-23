@@ -29,7 +29,9 @@ export const Page5Ceremonies: React.FC<Page5Props> = ({
   const isBn = language === "bn";
 
   const makeGoogleCalendarUrl = (item: CeremonyItem) => {
-    const title = encodeURIComponent(`Argha & Arpita Wedding: ${item.titleEn}`);
+    const title = encodeURIComponent(
+      `Arghya & Arpita Wedding: ${item.titleEn}`,
+    );
 
     const details = encodeURIComponent(
       `Join us for ${item.titleEn} (${item.titleBn})\nTime: ${item.timeEn}\nVenue: ${item.hallEn}`,
