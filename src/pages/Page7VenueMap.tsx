@@ -99,7 +99,7 @@ export const Page7VenueMap: React.FC<Page7Props> = ({
           {/* Google Maps Directions and Arrival Time */}
           <div className="mt-3.5 flex min-w-0 flex-col items-stretch justify-between gap-3 sm:flex-row sm:items-center sm:gap-2">
             <a
-              href="https://maps.app.goo.gl/pNfPZdbKAZdeDfx66"
+              href="https://maps.app.goo.gl/oBhwiAy9aCb2wiUL6"
               target="_blank"
               rel="noopener noreferrer"
               className="flex w-full min-w-0 items-center justify-center gap-1.5 rounded-full border border-yellow-400 bg-red-800 px-3 py-2.5 text-center text-xs font-serif font-bold leading-snug text-yellow-300 shadow transition-all hover:bg-red-700 active:scale-95 sm:w-auto sm:px-4 sm:py-2 sm:text-sm"
