@@ -50,7 +50,7 @@ export const initialWeddingSettings: WeddingSettings = {
   },
   weddingDate: "2026-12-13T19:30:00",
   weddingDateBn: "২৬শে অগ্রহায়ণ, ১৪৩৩ বঙ্গাব্দ (১৩ই ডিসেম্বর, ২০২৬)",
-  weddingDateEn: "Friday, 13th December, 2026 (26th Agrahayana, 1433)",
+  weddingDateEn: "Sunday, 13th December, 2026 (26th Agrahayana, 1433)",
 
   receptionDate: "2026-12-15T17:00:00",
   receptionDateBn: "২৮শে অগ্রহায়ণ, ১৪৩৩ (১৫ই ডিসেম্বর, ২০২৬)",
