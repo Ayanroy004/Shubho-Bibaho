@@ -380,6 +380,30 @@ export const Page10Company: React.FC<Page10Props> = ({
             <ArrowRight className="h-4 w-4 shrink-0 text-yellow-400 transition-transform group-hover:translate-x-1" />
           </button>
         </div> */}
+        {/* Developer Credit */}
+        <div className="mt-3 border-t border-yellow-300 pt-3 text-center">
+          <p className="text-[10px] font-medium text-stone-500 sm:text-xs">
+            {isBn ? "ওয়েবসাইট তৈরি করেছেন" : "Designed & Developed by"}
+          </p>
+
+          <p className="mt-1 font-serif text-sm font-bold text-red-900">
+            Ayan Roy
+          </p>
+
+          <p className="mt-1 text-xs text-stone-600">
+            {isBn ? "ওয়েব ডেভেলপার" : "Web Developer"}
+          </p>
+
+          <a
+            href="https://www.facebook.com/Ayanroy004"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mt-2 inline-flex items-center gap-1 text-xs font-semibold text-red-800 underline decoration-yellow-500 underline-offset-4 hover:text-yellow-700"
+          >
+            Facebook Profile
+            <ExternalLink className="h-3 w-3" />
+          </a>
+        </div>
       </RoyalFrame>
     </div>
   );
